@@ -1,0 +1,60 @@
+generated: '2026-07-19'
+method: searched
+source: https://agentmesh.knostic.ai/api
+docs: https://agentmesh.knostic.ai/api
+summary:
+  types:
+  - http
+  api_key_in:
+  - header
+  oauth2_flows: []
+  notes: >-
+    AgentMesh authenticates API callers with a bearer API key minted from the AgentMesh
+    console. There is no OAuth 2.0 / OpenID Connect surface on the public API, so no
+    scopes artifact is emitted. Console (browser) sessions are brokered by Descope as
+    the identity provider, but that is the console's own login, not the API contract.
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  in: header
+  parameter: Authorization
+  format: 'Authorization: Bearer <api_key>'
+  description: >-
+    AgentMesh API key. Created from the console via POST /api/console/keys and sent on
+    every request as an Authorization bearer token.
+  sources:
+  - openapi/knostic-agentmesh-openapi.yml
+tiers:
+- tier: anonymous
+  description: >-
+    Read endpoints (/skills, /mcp, /extensions) answer unauthenticated requests at a
+    reduced tier. Verified live 2026-07-19: responses carry the header `X-Tier: anonymous`.
+  requires_key: false
+  endpoints:
+  - GET /skills
+  - GET /mcp
+  - GET /extensions
+- tier: api-key
+  description: >-
+    Scan endpoints require a valid API key; each key carries its own daily scan quota and
+    can only read back the scans it created.
+  requires_key: true
+  endpoints:
+  - POST /scan/skill/{slug}
+  - POST /scan/extension/{slug}
+  - GET /scans
+  - GET /scans/{scan_id}
+key_management:
+  console: https://agentmesh.knostic.ai/console
+  create_key_endpoint: POST /api/console/keys
+  identity_provider: Descope
+  notes: >-
+    Console endpoints (/api/console/me, /api/console/keys, /api/console/artefacts) are
+    session-scoped browser APIs behind the Descope login; they additionally send an
+    X-User-Email header. They are not part of the public API contract.
+failure_modes:
+- status: 401
+  detail: Missing or invalid API key
+- status: 403
+  detail: Scan belongs to a different API key
