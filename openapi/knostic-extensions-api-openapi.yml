@@ -1,0 +1,402 @@
+openapi: 3.1.0
+info:
+  title: Knostic AgentMesh extensions API
+  version: 1.0.0
+  description: 'AgentMesh is Knostic''s reputation and threat-intelligence service for the AI agent supply chain. It continuously discovers, tracks and scans AI agent skills, MCP (Model Context Protocol) servers, and VS Code / IDE extensions for prompt injection and supply-chain threats, and exposes the resulting catalog and scan verdicts over a read API plus an on-demand scan API.
+
+
+    Read endpoints (`/skills`, `/mcp`, `/extensions`) are served to anonymous callers at a reduced tier (responses carry an `X-Tier: anonymous` header); scan endpoints (`/scan/*`, `/scans`) require an API key minted from the AgentMesh console.'
+  contact:
+    name: Knostic
+    url: https://www.knostic.ai/
+    email: support@knostic.ai
+  termsOfService: https://www.knostic.ai/terms-of-service
+servers:
+- url: https://agentmesh.knostic.ai/api
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: extensions
+  description: VS Code / IDE marketplace extensions with risk assessment
+paths:
+  /extensions:
+    get:
+      operationId: listExtensions
+      summary: List extensions
+      description: Returns a paginated list of VSCode/IDE extensions with risk assessment data. Supports search across name, description, and publisher.
+      tags:
+      - extensions
+      responses:
+        '200':
+          description: Paginated array of extension summaries with risk metadata.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  extensions:
+                    type: array
+                    description: Array of extension objects
+                    items:
+                      $ref: '#/components/schemas/ExtensionSummary'
+                  total:
+                    type: integer
+                    description: Total matching extensions
+                  page:
+                    type: integer
+                    description: Current page
+                  limit:
+                    type: integer
+                    description: Page size
+              examples:
+                default:
+                  summary: Provider-published example
+                  value:
+                    extensions:
+                    - id: 7
+                      extensionId: ms-python.python
+                      publisher: ms-python
+                      name: python
+                      displayName: Python
+                      version: 2026.1.0
+                      installCount: 98200000
+                      rating: 4.6
+                      marketplace: vscode
+                      description: IntelliSense, linting, debugging for Python
+                      lastUpdated: '2026-01-20T00:00:00'
+                      riskStatus: pass
+                      riskLevel: safe
+                      riskReasons: null
+                      verified: true
+                      downloadUrl: https://marketplace.visualstudio.com/...
+                      latestScanTimestamp: '2026-01-21T04:00:00'
+                      fileSha256: c3a8f1d6e4b9c2a7f5d8e3b6a1c4f7d2e5b8a3c6f9d2e5b8a1c4f7d3e6b9a2c5
+                    total: 1
+                    page: 1
+                    limit: 50
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                default:
+                  value:
+                    detail: missing or invalid api key
+      parameters:
+      - name: q
+        in: query
+        required: false
+        description: Search query — matches name, description, and publisher
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        description: Sort field
+        schema:
+          type: string
+          enum:
+          - recent
+          - name
+          - stars
+          - status
+          - rating
+          - scanned
+          - market
+          default: recent
+      - name: dir
+        in: query
+        required: false
+        description: Sort direction
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      - name: status
+        in: query
+        required: false
+        description: Filter by risk status
+        schema:
+          type: string
+          enum:
+          - unscanned
+          - safe
+          - risky
+          - dangerous
+      - name: marketplace
+        in: query
+        required: false
+        description: Filter by marketplace (e.g. 'vscode', 'open-vsx')
+        schema:
+          type: string
+      - name: hash
+        in: query
+        required: false
+        description: 'Filter by SHA-256 hash (64 hex characters) of the archived extension VSIX bytes. Returns extensions whose fileSha256 matches. Note: extensions don''t currently have a multi-version dedup wrapper, so this matches any row whose hash equals the input. Composes with q, status, and marketplace.'
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        required: false
+        description: Results per page (1–200)
+        schema:
+          type: integer
+          default: 50
+  /extensions/{ext_id}:
+    get:
+      operationId: getExtension
+      summary: Get extension
+      description: Returns full details for a single extension including risk level, evidence snippets, scan timestamps, and download URL.
+      tags:
+      - extensions
+      responses:
+        '200':
+          description: Full extension object with risk analysis details.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Extension ID
+                  extensionId:
+                    type: string
+                    description: Marketplace extension identifier
+                  extensionHash:
+                    type: string
+                    description: Stable hash of the extension's marketplace identity
+                  publisher:
+                    type: string
+                    description: Publisher name
+                  name:
+                    type: string
+                    description: Extension name
+                  displayName:
+                    type: string
+                    description: Display name
+                  version:
+                    type: string
+                    description: Current version
+                  installCount:
+                    type: integer
+                    description: Total installs
+                  rating:
+                    type:
+                    - number
+                    - 'null'
+                    description: Average marketplace rating
+                  reviewCount:
+                    type: integer
+                    description: Number of marketplace reviews
+                  marketplace:
+                    type: string
+                    description: Marketplace identifier (e.g. 'vscode', 'open-vsx')
+                  description:
+                    type:
+                    - string
+                    - 'null'
+                    description: Extension description
+                  lastUpdated:
+                    type:
+                    - string
+                    - 'null'
+                    description: ISO-8601 timestamp of the last marketplace update
+                  verified:
+                    type: boolean
+                    description: Whether the publisher is marketplace-verified
+                  downloadUrl:
+                    type: string
+                    description: Marketplace download URL
+                  riskStatus:
+                    type: string
+                    description: Normalized risk status (pass/warn/fail/gray)
+                  riskLevel:
+                    type:
+                    - string
+                    - 'null'
+                    description: Raw risk level (safe/low/medium/high/critical)
+                  riskReasons:
+                    type:
+                    - array
+                    - 'null'
+                    description: List of risk reason strings
+                    items:
+                      type: string
+                  riskEvidence:
+                    type:
+                    - array
+                    - 'null'
+                    description: Code snippets and file paths that triggered risk flags
+                    items:
+                      type: object
+                      properties:
+                        snippet:
+                          type: string
+                          description: Code excerpt that matched a risk pattern
+                        file_path:
+                          type: string
+                          description: Relative path of the file inside the extension archive
+                        severity:
+                          type: string
+                          description: Per-finding severity (when the scanner provides one)
+                        finding_type:
+                          type: string
+                          description: Category of finding (when the scanner classifies one)
+                  riskSource:
+                    type:
+                    - string
+                    - 'null'
+                    description: Which scanner produced the risk verdict (e.g. 'rag', 'agent')
+                  agentScanTimestamp:
+                    type:
+                    - string
+                    - 'null'
+                    description: ISO-8601 timestamp of the most recent agent scan
+                  ragScanTimestamp:
+                    type:
+                    - string
+                    - 'null'
+                    description: ISO-8601 timestamp of the most recent RAG scan
+                  fileSha256:
+                    type:
+                    - string
+                    - 'null'
+                    description: SHA-256 hash (lowercase hex) of the archived extension artifact. null until the upstream pipeline computes it.
+              examples:
+                default:
+                  summary: Provider-published example
+                  value:
+                    id: 7
+                    extensionId: ms-python.python
+                    extensionHash: abc123def456
+                    publisher: ms-python
+                    name: python
+                    displayName: Python
+                    version: 2026.1.0
+                    installCount: 98200000
+                    rating: 4.6
+                    reviewCount: 450
+                    marketplace: vscode
+                    description: IntelliSense, linting, debugging for Python
+                    lastUpdated: '2026-01-20T00:00:00'
+                    verified: true
+                    downloadUrl: https://marketplace.visualstudio.com/...
+                    riskStatus: pass
+                    riskLevel: safe
+                    riskReasons: null
+                    riskEvidence: null
+                    riskSource: rag
+                    agentScanTimestamp: '2026-01-21T04:00:00'
+                    ragScanTimestamp: '2026-01-21T04:00:00'
+                    fileSha256: c3a8f1d6e4b9c2a7f5d8e3b6a1c4f7d2e5b8a3c6f9d2e5b8a1c4f7d3e6b9a2c5
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                default:
+                  value:
+                    detail: missing or invalid api key
+        '404':
+          description: Extension not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                default:
+                  value:
+                    detail: extension not found
+      parameters:
+      - name: ext_id
+        in: path
+        required: true
+        description: Extension ID
+        schema:
+          type: integer
+components:
+  schemas:
+    Error:
+      type: object
+      description: AgentMesh error envelope.
+      properties:
+        detail:
+          type: string
+          description: Human-readable error message
+    ExtensionSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Skill ID
+        extensionId:
+          type: string
+          description: Marketplace extension identifier
+        publisher:
+          type: string
+          description: Publisher name
+        name:
+          type: string
+          description: Skill name
+        displayName:
+          type: string
+          description: Display name
+        version:
+          type: string
+          description: Current version
+        installCount:
+          type: integer
+          description: Total installs
+        rating:
+          type: number
+          description: Average marketplace rating
+        marketplace:
+          type: string
+          description: Marketplace identifier (e.g. 'vscode', 'open-vsx')
+        description:
+          type: string
+          description: Skill description
+        lastUpdated:
+          type: string
+          description: ISO-8601 timestamp of the last marketplace update
+        riskStatus:
+          type: string
+          description: Normalized risk status (pass/warn/fail/gray)
+        riskLevel:
+          type: string
+          description: Raw risk level (safe/low/medium/high/critical)
+        riskReasons:
+          type:
+          - string
+          - 'null'
+          description: List of risk reason strings
+        verified:
+          type: boolean
+          description: Whether the publisher is marketplace-verified
+        downloadUrl:
+          type: string
+          description: Marketplace download URL
+        latestScanTimestamp:
+          type: string
+        fileSha256:
+          type: string
+          description: SHA-256 hash (lowercase hex) of the archived extension artifact. null until the upstream pipeline computes it.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'AgentMesh API key issued from the console (POST /api/console/keys), sent as `Authorization: Bearer <api_key>`. Read endpoints also serve anonymous callers at a reduced tier.'

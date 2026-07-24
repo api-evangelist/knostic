@@ -1,0 +1,381 @@
+openapi: 3.1.0
+info:
+  title: Knostic AgentMesh extensions scans API
+  version: 1.0.0
+  description: 'AgentMesh is Knostic''s reputation and threat-intelligence service for the AI agent supply chain. It continuously discovers, tracks and scans AI agent skills, MCP (Model Context Protocol) servers, and VS Code / IDE extensions for prompt injection and supply-chain threats, and exposes the resulting catalog and scan verdicts over a read API plus an on-demand scan API.
+
+
+    Read endpoints (`/skills`, `/mcp`, `/extensions`) are served to anonymous callers at a reduced tier (responses carry an `X-Tier: anonymous` header); scan endpoints (`/scan/*`, `/scans`) require an API key minted from the AgentMesh console.'
+  contact:
+    name: Knostic
+    url: https://www.knostic.ai/
+    email: support@knostic.ai
+  termsOfService: https://www.knostic.ai/terms-of-service
+servers:
+- url: https://agentmesh.knostic.ai/api
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: scans
+  description: On-demand security scans and scan history (API key required)
+paths:
+  /scan/skill/{slug}:
+    post:
+      operationId: scanSkill
+      summary: Scan skill
+      description: Trigger an on-demand security scan for a skill. The slug format is owner:repo for root-level skills or owner:repo:skill_name for nested skills. Returns immediately with a scan ID — poll GET /scans/:scan_id for results. Rate limited to 30 scans/day per API key.
+      tags:
+      - scans
+      responses:
+        '200':
+          description: Scan job accepted with queue position and time estimate.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scan_id:
+                    type: integer
+                    description: Unique scan ID for polling
+                  status:
+                    type: string
+                    description: Initial status (pending)
+                  position_in_queue:
+                    type: integer
+                    description: Position in the scan queue
+                  estimated_seconds:
+                    type: integer
+                    description: Estimated time until completion
+              examples:
+                default:
+                  summary: Provider-published example
+                  value:
+                    scan_id: 1
+                    status: pending
+                    position_in_queue: 1
+                    estimated_seconds: 30
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                default:
+                  value:
+                    detail: missing or invalid api key
+        '404':
+          description: Skill not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                default:
+                  value:
+                    detail: skill not found
+        '429':
+          description: Daily scan limit exceeded (30/day)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                default:
+                  value:
+                    detail: daily scan limit exceeded (30/day)
+        '503':
+          description: Scan queue is full, try again later
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                default:
+                  value:
+                    detail: scan queue is full, try again later
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        description: Skill slug — e.g. anthropics:skills or anthropics:skills:algorithmic-art
+        schema:
+          type: string
+      security:
+      - bearerAuth: []
+      x-requires-api-key: true
+  /scan/extension/{slug}:
+    post:
+      operationId: scanExtension
+      summary: Scan extension
+      description: Trigger an on-demand security scan for a VS Code/IDE extension. The slug format is marketplace:extension_id (e.g. vscode:ms-python.python). Returns immediately — poll GET /scans/:scan_id for results. Rate limited to 30 scans/day per API key.
+      tags:
+      - scans
+      responses:
+        '200':
+          description: Scan job accepted with queue position and time estimate.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scan_id:
+                    type: integer
+                    description: Unique scan ID for polling
+                  status:
+                    type: string
+                    description: Initial status (pending)
+                  position_in_queue:
+                    type: integer
+                    description: Position in the scan queue
+                  estimated_seconds:
+                    type: integer
+                    description: Estimated time until completion
+              examples:
+                default:
+                  summary: Provider-published example
+                  value:
+                    scan_id: 2
+                    status: pending
+                    position_in_queue: 1
+                    estimated_seconds: 60
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                default:
+                  value:
+                    detail: missing or invalid api key
+        '404':
+          description: Extension not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                default:
+                  value:
+                    detail: extension not found
+        '429':
+          description: Daily scan limit exceeded (30/day)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                default:
+                  value:
+                    detail: daily scan limit exceeded (30/day)
+        '503':
+          description: Scan queue is full, try again later
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                default:
+                  value:
+                    detail: scan queue is full, try again later
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        description: Extension slug — e.g. vscode:ms-python.python
+        schema:
+          type: string
+      security:
+      - bearerAuth: []
+      x-requires-api-key: true
+  /scans:
+    get:
+      operationId: listScans
+      summary: List scans
+      description: Returns your adhoc scan history, ordered by most recent first. Shows status, result, and timestamps for each scan. Response includes X-Scan-Limit-Remaining header with remaining daily scan credits.
+      tags:
+      - scans
+      responses:
+        '200':
+          description: Paginated array of scan records.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scans:
+                    type: array
+                    description: Array of scan objects
+                    items:
+                      $ref: '#/components/schemas/Scan'
+                  total:
+                    type: integer
+                    description: Total scans for this API key
+                  page:
+                    type: integer
+                    description: Current page
+                  limit:
+                    type: integer
+                    description: Page size
+              examples:
+                default:
+                  summary: Provider-published example
+                  value:
+                    scans:
+                    - scan_id: 1
+                      scan_type: skill
+                      target:
+                        git_repo: anthropics/skills
+                        skill_path: SKILL.md
+                        commit_hash: a1b2c3d
+                      status: completed
+                      result: pass
+                      error: null
+                      created_at: '2026-03-05T10:00:00+00:00'
+                      started_at: '2026-03-05T10:00:01+00:00'
+                      completed_at: '2026-03-05T10:00:12+00:00'
+                    total: 1
+                    page: 1
+                    limit: 20
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                default:
+                  value:
+                    detail: missing or invalid api key
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        required: false
+        description: Results per page (1–100)
+        schema:
+          type: integer
+          default: 20
+      security:
+      - bearerAuth: []
+      x-requires-api-key: true
+  /scans/{scan_id}:
+    get:
+      operationId: getScan
+      summary: Get scan result
+      description: Poll for the result of an adhoc scan. When pending, returns queue position and time estimate. When completed, returns the scan result and details. You can only access scans created with your own API key.
+      tags:
+      - scans
+      responses:
+        '200':
+          description: Scan status with result details when completed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scan_id:
+                    type: integer
+                    description: Scan ID
+                  scan_type:
+                    type: string
+                    description: skill or extension
+                  target:
+                    type: object
+                    description: What was scanned (repo, path, etc.)
+                  status:
+                    type: string
+                    description: pending, running, completed, or failed
+                  result:
+                    type:
+                    - string
+                    - 'null'
+                    description: Scan result (pass/warn/fail for skills, safe/low/medium/high/critical for extensions)
+                  details:
+                    type:
+                    - object
+                    - 'null'
+                    description: Full scan output (matches, files scanned, etc.)
+                  error:
+                    type:
+                    - string
+                    - 'null'
+                    description: Error message if scan failed
+              examples:
+                default:
+                  summary: Provider-published example
+                  value:
+                    scan_id: 1
+                    scan_type: skill
+                    target:
+                      git_repo: anthropics/skills
+                      skill_path: SKILL.md
+                      commit_hash: a1b2c3d
+                    status: completed
+                    result: pass
+                    details:
+                      matches: []
+                      files_scanned: 3
+                    completed_at: '2026-03-05T10:00:12+00:00'
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                default:
+                  value:
+                    detail: missing or invalid api key
+        '403':
+          description: Scan belongs to a different API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                default:
+                  value:
+                    detail: scan belongs to a different api key
+        '404':
+          description: Scan not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                default:
+                  value:
+                    detail: scan not found
+      parameters:
+      - name: scan_id
+        in: path
+        required: true
+        description: Scan ID returned from POST /scan/*
+        schema:
+          type: integer
+      security:
+      - bearerAuth: []
+      x-requires-api-key: true
+components:
+  schemas:
+    Error:
+      type: object
+      description: AgentMesh error envelope.
+      properties:
+        detail:
+          type: string
+          description: Human-readable error message
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'AgentMesh API key issued from the console (POST /api/console/keys), sent as `Authorization: Bearer <api_key>`. Read endpoints also serve anonymous callers at a reduced tier.'
