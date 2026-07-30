@@ -1,0 +1,22 @@
+{
+  "provider": "knostic",
+  "sources": [
+    "knostic-extensions-api-openapi.yml",
+    "knostic-mcp-api-openapi.yml",
+    "knostic-scans-api-openapi.yml",
+    "knostic-skills-api-openapi.yml"
+  ],
+  "outputs": [
+    "knostic-extensions-api-openapi.yml",
+    "knostic-mcp-api-openapi.yml",
+    "knostic-scans-api-openapi.yml",
+    "knostic-skills-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [
+    "knostic-scans-api-openapi.yml: dangling $ref: #/components/schemas/Scan"
+  ],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

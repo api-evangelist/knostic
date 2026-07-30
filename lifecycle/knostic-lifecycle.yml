@@ -1,0 +1,42 @@
+generated: '2026-07-19'
+method: searched
+source: https://agentmesh.knostic.ai/api
+versioning:
+  scheme: unversioned-path
+  current: none
+  base_path: https://agentmesh.knostic.ai/api
+  notes: >-
+    The AgentMesh public API carries no version segment or version header. Knostic
+    publishes no API versioning policy. Scan verdicts are individually versioned by
+    scannerName + scannerVersion so historical results stay interpretable across scanner
+    upgrades — GET /skills/{skill_id}/versions/{version_id} and the MCP equivalent exist
+    precisely to read scan history across scanner versions.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  published: false
+  notes: >-
+    No deprecation policy, no RFC 8594 Sunset/Deprecation header support, and no
+    deprecated operations in the spec.
+sla:
+  url: null
+  uptime_target: null
+  published: false
+status_page:
+  url: null
+  published: false
+  notes: >-
+    Probed https://status.knostic.ai/ — does not resolve. No status page found on the
+    marketing site or the AgentMesh host.
+deprecated_operations: []
+open_source_lifecycle:
+  notes: >-
+    Knostic's open-source tools carry their own release lifecycle on GitHub. AgentSonar
+    ships semver releases with a Conventional-Commits CHANGELOG (current 1.1.5,
+    2026-03-13) and binary releases per platform.
+  changelogs:
+  - repo: knostic/AgentSonar
+    url: https://github.com/knostic/AgentSonar/blob/main/CHANGELOG.md
+    current_version: 1.1.5
+    released: '2026-03-13'
+  detail: changelog/knostic-changelog.yml

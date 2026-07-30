@@ -1,0 +1,80 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Knostic AgentMesh
+  version: 1.0.0
+extends: openapi/knostic-agentmesh-openapi.yml
+x-generated: '2026-07-19'
+x-method: generated
+x-source: >-
+  API Evangelist enrichment pass. Captures observations verified against the live API on
+  2026-07-19 that are not stated in Knostic's published reference.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-19'
+    x-artifact-source: >-
+      Spec reconstructed from Knostic's own published endpoint catalog at
+      https://agentmesh.knostic.ai/api; Knostic publishes no OpenAPI of its own.
+    x-corpus-size-observed:
+      skills: 80504
+      mcp_servers: 4783
+      extensions: 59903
+      observed_at: '2026-07-19'
+- target: $.components.securitySchemes.bearerAuth
+  update:
+    x-anonymous-tier: >-
+      Catalog read endpoints (/skills, /mcp, /extensions) serve unauthenticated callers.
+      Verified live: responses carry `X-Tier: anonymous`. The published reference lists a
+      401 on these operations, which applies only when an invalid key IS supplied.
+- target: $.components.schemas.Error
+  update:
+    x-error-format: custom
+    x-not-rfc9457: >-
+      AgentMesh does not emit application/problem+json. Verified live: GET
+      /api/skills/999999999 returns {"detail":"not found"}.
+- target: $.paths['/skills'].get
+  update:
+    x-response-headers:
+      X-Tier: Caller service tier; `anonymous` for unauthenticated requests.
+    x-vocabulary-mismatch: >-
+      The `status` filter accepts dangerous|risky|safe|unscanned, but rows return
+      scanStatus values such as pass|low|unscanned. The filter and response vocabularies
+      are not the same enum.
+- target: $.paths['/mcp'].get
+  update:
+    x-vocabulary-mismatch: >-
+      Same filter-vs-response vocabulary mismatch as /skills.
+    x-note: >-
+      AgentMesh catalogues and scans third-party MCP servers; Knostic itself publishes no
+      MCP server. See mcp/knostic-mcp.yml.
+- target: $.paths['/extensions'].get
+  update:
+    x-hash-semantics: >-
+      Unlike /skills and /mcp, extensions have no multi-version dedup wrapper, so `hash`
+      matches any single row whose fileSha256 equals the input rather than matching across
+      versions.
+- target: $.paths['/scans'].get
+  update:
+    x-response-headers:
+      X-Scan-Limit-Remaining: Remaining daily scan credits for the calling API key.
+- target: $.paths['/scan/skill/{slug}'].post
+  update:
+    x-async-pattern: submit-and-poll
+    x-idempotency: >-
+      None. Re-issuing this request creates a new scan job and consumes another of the 30
+      daily credits. Record scan_id and poll GET /scans/{scan_id} instead of retrying.
+    x-quota: 30 scans per API key per day, shared with /scan/extension.
+- target: $.paths['/scan/extension/{slug}'].post
+  update:
+    x-async-pattern: submit-and-poll
+    x-idempotency: >-
+      None. Re-issuing this request creates a new scan job and consumes another credit.
+    x-quota: 30 scans per API key per day, shared with /scan/skill.
+- target: $.paths['/scans/{scan_id}'].get
+  update:
+    x-polling-guidance: >-
+      Use estimated_seconds from the POST response to set the polling interval. No webhook
+      or callback surface exists.
+    x-result-vocabulary: >-
+      Result enum depends on scan_type: pass|warn|fail for skills,
+      safe|low|medium|high|critical for extensions.

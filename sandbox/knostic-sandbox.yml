@@ -1,0 +1,77 @@
+generated: '2026-07-19'
+method: searched
+source: https://agentmesh.knostic.ai/api
+summary: >-
+  Knostic publishes no test/live key separation, no sandbox environment, and no magic test
+  values. What it does provide is an in-browser API playground on the reference page and an
+  anonymous read tier that lets a developer exercise the real catalog endpoints against
+  production data with no credential at all — the practical equivalent of a try-it console,
+  against live data.
+test_live_separation:
+  supported: false
+  notes: >-
+    A single production host (https://agentmesh.knostic.ai/api). No test-mode keys, no key
+    prefixes, no mode switch.
+magic_test_values:
+  published: false
+  notes: >-
+    No test cards, test identifiers, or fixture values — not applicable to a security
+    reputation API.
+test_clocks:
+  supported: false
+playground:
+  available: true
+  url: https://agentmesh.knostic.ai/api
+  type: in-page API explorer
+  description: >-
+    The API reference page ships a playground that issues the request live from the
+    browser against the production API and renders status, response body, and the
+    equivalent curl command.
+  covered_operations:
+  - listSkills
+  - getSkill
+  - getVersionScans
+  - listMcp
+  - getMcp
+  - getMcpVersionScans
+  - listExtensions
+  - getExtension
+  excluded_operations:
+  - scanSkill
+  - scanExtension
+  - listScans
+  - getScan
+  exclusion_reason: >-
+    Scan endpoints have no playground path — they require an API key and consume the
+    30/day quota, so they cannot be exercised anonymously.
+anonymous_tier:
+  available: true
+  description: >-
+    Catalog read endpoints answer unauthenticated requests, returning the header
+    `X-Tier: anonymous`. Verified live 2026-07-19.
+  verified_examples:
+  - request: GET https://agentmesh.knostic.ai/api/skills?limit=3
+    status: 200
+    saved_response: examples/knostic-list-skills-response.json
+  - request: GET https://agentmesh.knostic.ai/api/mcp?limit=3
+    status: 200
+    saved_response: examples/knostic-list-mcp-response.json
+  - request: GET https://agentmesh.knostic.ai/api/extensions?limit=3
+    status: 200
+    saved_response: examples/knostic-list-extensions-response.json
+  caveat: >-
+    These are live production records, not fixtures. Values change between calls; do not
+    assert on specific ids in tests.
+free_tier_products:
+  notes: >-
+    Knostic offers free entry points to adjacent products rather than an API sandbox.
+  items:
+  - name: Kirin
+    url: https://www.getkirin.com/
+    terms: Free for up to five users.
+  - name: OpenAnt
+    url: https://openant.knostic.ai
+    terms: Open source LLM-based vulnerability discovery.
+  - name: LLM Oversharing Tester
+    url: https://www.knostic.ai/
+    terms: Free tool listed on the marketing site.

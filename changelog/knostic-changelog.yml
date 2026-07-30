@@ -1,0 +1,60 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/knostic/AgentSonar/blob/main/CHANGELOG.md
+scope: >-
+  Knostic publishes no changelog for the AgentMesh API or for the commercial platform. The
+  only dated, structured changelog Knostic publishes is on its open-source tooling. This
+  artifact captures the AgentSonar changelog; it is not an API changelog.
+scheme: semver
+convention: Conventional Commits (release-please style, auto-generated)
+current_version: 1.1.5
+current_version_date: '2026-03-13'
+repo: knostic/AgentSonar
+note: >-
+  Releases before 1.1.3 were cut under the repository's former name, knostic/shadow_ai —
+  the compare links in the changelog still point there.
+entries:
+- version: 1.1.5
+  date: '2026-03-13'
+  breaking: false
+  fixes:
+  - 'ci: add gitleaks secret scanning'
+- version: 1.1.4
+  date: '2026-03-09'
+  breaking: false
+  fixes:
+  - netstat
+  - netstat issue
+  - netstat version
+- version: 1.1.2
+  date: '2026-01-29'
+  breaking: false
+  fixes:
+  - macos releases
+- version: 1.1.1
+  date: '2026-01-29'
+  breaking: false
+  fixes:
+  - api validation
+- version: 1.1.0
+  date: '2026-01-29'
+  breaking: false
+  additions:
+  - 'cli: classifier only'
+  fixes:
+  - test hot reload
+  - use file size in addition to modTime for hot reload detection
+- version: 1.0.0
+  date: '2026-01-26'
+  breaking: false
+  additions:
+  - 'sigma: added sigma export/import'
+  fixes:
+  - full linux support for tests
+  - 'linux: stuff'
+  - 'tests: non darwin db stub'
+api_changelog:
+  published: false
+  notes: >-
+    No dated changelog, release notes, or version history for the AgentMesh API was found
+    on agentmesh.knostic.ai or www.knostic.ai.

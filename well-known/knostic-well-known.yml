@@ -1,0 +1,31 @@
+generated: '2026-07-19'
+method: searched
+source: live probe of the Knostic hosts
+result: none
+summary: >-
+  Knostic publishes no /.well-known/ discovery surface. No security.txt, no OIDC or OAuth
+  authorization-server metadata, no api-catalog, no ai-plugin.json on either the marketing
+  host or the AgentMesh API host. Recorded as verified absence, not as a gap to fabricate.
+hosts:
+- host: https://www.knostic.ai
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+- host: https://agentmesh.knostic.ai
+  note: >-
+    This host is a single-page application with a catch-all route: every unmatched path
+    returns HTTP 200 with the SPA index.html (content-type text/html). The 200s below are
+    therefore NOT well-known documents — each was fetched and confirmed to be the SPA
+    shell. No file was saved.
+  documents:
+  - {path: /.well-known/security.txt, status: 200, content_type: text/html, is_document: false}
+  - {path: /.well-known/openid-configuration, status: 200, content_type: text/html, is_document: false}
+  - {path: /.well-known/oauth-authorization-server, status: 200, content_type: text/html, is_document: false}
+  - {path: /.well-known/api-catalog, status: 200, content_type: text/html, is_document: false}
+  - {path: /.well-known/ai-plugin.json, status: 200, content_type: text/html, is_document: false}
+  - {path: /llms.txt, status: 200, content_type: text/html, is_document: false}
+  - {path: /openapi.json, status: 200, content_type: text/html, is_document: false}
+documents: []

@@ -1,0 +1,130 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/knostic-agentmesh-openapi.yml
+description: >-
+  Entity-relationship graph for the Knostic AgentMesh API, derived from the OpenAPI schema
+  graph and id-reference fields. AgentMesh models three independently discovered artifact
+  families (skills, MCP servers, extensions) over a shared version + scan-result spine,
+  plus a separate on-demand scan job entity.
+identifiers:
+  style: opaque integer surrogate keys
+  note: >-
+    No prefixed or typed ids. Skill, server, extension, version and scan ids are plain
+    integers and are only unique within their own collection — id 42 is a different thing
+    in /skills than in /extensions.
+entities:
+- name: Skill
+  description: An AI agent skill (a SKILL.md) discovered in a public repository.
+  id_field: id
+  collection: /skills
+  corpus_size: 80504
+  key_fields: [name, gitRepo, skillPath, description, sourceUrl, stars, forks, license,
+    archived, repoCreatedAt, lastPushedAt, contributor, scanStatus, latestScanAt,
+    latestVersionAt, fileSha256]
+  relationships:
+  - type: has_many
+    target: Version
+    via: versions
+  - type: has_many
+    target: ScanResult
+    via: scanResults
+    note: Scoped to the selected version (version_id query param, defaults to latest).
+- name: McpServer
+  description: A Model Context Protocol server discovered in a public repository.
+  id_field: id
+  collection: /mcp
+  corpus_size: 4783
+  key_fields: [name, gitRepo, serverPath, description, sourceUrl, stars, forks, license,
+    archived, repoCreatedAt, lastPushedAt, scanStatus, latestScanAt, latestVersionAt,
+    fileSha256]
+  relationships:
+  - type: has_many
+    target: Version
+    via: versions
+  - type: has_many
+    target: ScanResult
+    via: scanResults
+- name: Extension
+  description: A VS Code / IDE marketplace extension with risk assessment.
+  id_field: id
+  collection: /extensions
+  corpus_size: 59903
+  key_fields: [extensionId, extensionHash, publisher, name, displayName, version,
+    installCount, rating, reviewCount, marketplace, description, lastUpdated, verified,
+    downloadUrl, riskStatus, riskLevel, riskReasons, riskSource, agentScanTimestamp,
+    ragScanTimestamp, fileSha256]
+  relationships:
+  - type: has_many
+    target: RiskEvidence
+    via: riskEvidence
+  note: >-
+    Extensions have no version wrapper — risk lives directly on the row, and hash lookup
+    matches a single row rather than across versions.
+- name: Version
+  description: A tracked commit-level version of a skill or MCP server.
+  id_field: id
+  key_fields: [commitHash, commitTimestamp, scanSummary, fileSha256]
+  relationships:
+  - type: belongs_to
+    target: Skill
+    via: skill_id
+  - type: belongs_to
+    target: McpServer
+    via: server_id
+  - type: has_many
+    target: ScanResult
+    via: scanResults
+- name: ScanResult
+  description: One scanner's verdict on one version of one artifact.
+  key_fields: [scannerName, scannerVersion, result, details, scannedAt]
+  relationships:
+  - type: belongs_to
+    target: Version
+    via: version_id
+  values:
+    result: [pass, warn, fail, error]
+    scannerName_example: nova
+- name: RiskEvidence
+  description: A code snippet and file path that triggered an extension risk flag.
+  key_fields: [snippet, file_path, severity, finding_type]
+  relationships:
+  - type: belongs_to
+    target: Extension
+- name: Scan
+  description: >-
+    An on-demand scan job created by an API key. Distinct from the batch ScanResult spine.
+  id_field: scan_id
+  collection: /scans
+  key_fields: [scan_type, target, status, result, details, error, created_at, started_at,
+    completed_at]
+  values:
+    scan_type: [skill, extension]
+    status: [pending, running, completed, failed]
+    result_skill: [pass, warn, fail]
+    result_extension: [safe, low, medium, high, critical]
+  relationships:
+  - type: belongs_to
+    target: ApiKey
+    via: owning API key (403 when read by a different key)
+  - type: references
+    target: Skill
+    via: 'target.git_repo + target.skill_path (slug owner:repo[:skill_name])'
+  - type: references
+    target: Extension
+    via: 'target slug (marketplace:extension_id)'
+status_vocabularies:
+  filter_status: [dangerous, risky, safe, unscanned]
+  scan_status_observed: [pass, low, unscanned]
+  risk_level: [safe, low, medium, high, critical]
+  risk_status: [pass, warn, fail, gray]
+  note: >-
+    The catalog `status` FILTER vocabulary (dangerous/risky/safe/unscanned) does not match
+    the `scanStatus`/`riskStatus` values returned on rows (pass/warn/fail/gray, low/…).
+    Clients must map between the filter vocabulary and the response vocabulary.
+cross_cutting:
+  content_addressing: >-
+    fileSha256 is the join key across the whole model — the SHA-256 of the archived
+    artifact bytes. Every collection accepts a `hash` filter, making the corpus queryable
+    by artifact identity rather than by name, which is what lets a caller identify a known
+    artifact regardless of how it is named or republished.
+render: null

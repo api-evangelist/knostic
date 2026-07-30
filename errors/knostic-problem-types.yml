@@ -1,0 +1,78 @@
+generated: '2026-07-19'
+method: searched
+source: https://agentmesh.knostic.ai/api
+derived_from: openapi/knostic-agentmesh-openapi.yml
+format: custom
+rfc9457: false
+envelope:
+  media_type: application/json
+  shape:
+    detail: Human-readable error message
+  example: '{"detail": "not found"}'
+  note: >-
+    AgentMesh does not emit RFC 9457 application/problem+json. Every error is a flat JSON
+    object with a single `detail` string; the HTTP status carries the semantics.
+problems:
+- status: 401
+  title: Missing or invalid API key
+  detail_example: missing or invalid api key
+  meaning: >-
+    The Authorization bearer token was absent or not a valid AgentMesh API key. Note that
+    read endpoints still serve anonymous callers at the reduced `X-Tier: anonymous` tier,
+    so a 401 on a read path means a key was supplied and rejected.
+  remediation: Mint a fresh key from the AgentMesh console (POST /api/console/keys).
+  source_operations:
+  - listSkills
+  - getSkill
+  - getVersionScans
+  - listMcp
+  - getMcp
+  - getMcpVersionScans
+  - listExtensions
+  - getExtension
+  - scanSkill
+  - scanExtension
+  - listScans
+  - getScan
+- status: 403
+  title: Scan belongs to a different API key
+  meaning: >-
+    Scan records are scoped to the API key that created them; a key cannot read another
+    key's scan.
+  remediation: Poll only scan_ids returned to this key by POST /scan/*.
+  source_operations:
+  - getScan
+- status: 404
+  title: Resource not found
+  detail_example: not found
+  verified: 'Live GET /api/skills/999999999 on 2026-07-19 returned {"detail":"not found"}'
+  meaning: >-
+    Per-operation variants published by the provider: "Skill not found", "MCP server not
+    found", "Extension not found", "Scan not found", and "No scan results for this
+    version" on the version-scan endpoints.
+  remediation: Verify the id, or list the collection first to obtain a valid id.
+  source_operations:
+  - getSkill
+  - getVersionScans
+  - getMcp
+  - getMcpVersionScans
+  - getExtension
+  - scanSkill
+  - scanExtension
+  - getScan
+- status: 429
+  title: Daily scan limit exceeded (30/day)
+  meaning: The API key has spent its 30 on-demand scans for the day.
+  remediation: >-
+    Check X-Scan-Limit-Remaining on GET /scans before triggering a scan; wait for the
+    daily reset. Catalog reads are not subject to this quota.
+  source_operations:
+  - scanSkill
+  - scanExtension
+- status: 503
+  title: Scan queue is full, try again later
+  meaning: The shared scan queue has no capacity to accept the job.
+  remediation: Retry with backoff; this is transient and not charged against the daily quota.
+  source_operations:
+  - scanSkill
+  - scanExtension

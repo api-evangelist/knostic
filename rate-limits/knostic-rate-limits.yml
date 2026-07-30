@@ -1,0 +1,49 @@
+generated: '2026-07-19'
+method: searched
+source: https://agentmesh.knostic.ai/api
+api: Knostic AgentMesh API
+rate_limits:
+- name: On-demand scans
+  scope: api-key
+  limit_count: 30
+  period: day
+  applies_to:
+  - POST /scan/skill/{slug}
+  - POST /scan/extension/{slug}
+  exceeded_status: 429
+  exceeded_detail: Daily scan limit exceeded (30/day)
+  description: >-
+    Each AgentMesh API key may trigger 30 on-demand security scans per day across skills
+    and extensions combined.
+- name: Page size ceiling
+  scope: request
+  limit_count: 200
+  period: request
+  applies_to:
+  - GET /skills
+  - GET /mcp
+  - GET /extensions
+  description: The `limit` query parameter accepts 1–200 results per page (default 50).
+- name: Scan history page size ceiling
+  scope: request
+  limit_count: 100
+  period: request
+  applies_to:
+  - GET /scans
+  description: The `limit` query parameter accepts 1–100 results per page (default 20).
+headers:
+- name: X-Scan-Limit-Remaining
+  description: Remaining daily scan credits for the calling API key, returned on GET /scans.
+- name: X-Tier
+  description: >-
+    Service tier of the caller. Observed value `anonymous` for unauthenticated reads
+    (verified live 2026-07-19).
+backpressure:
+- status: 503
+  detail: Scan queue is full, try again later
+  guidance: >-
+    Transient queue saturation, distinct from the 429 quota exhaustion. Retry with backoff.
+notes: >-
+  Knostic publishes no numeric request-rate ceiling for the catalog read endpoints
+  (/skills, /mcp, /extensions); they are served to anonymous callers at a reduced tier.
+  Only the scan quota is documented as a hard limit.

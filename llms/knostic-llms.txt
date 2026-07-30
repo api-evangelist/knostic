@@ -1,0 +1,100 @@
+# Knostic
+
+> Knostic secures the AI agent supply chain. It discovers shadow AI, coding assistants,
+> MCP servers and IDE extensions inside an enterprise, and scans them for prompt
+> injection, data exfiltration, secret leakage and destructive commands. Its public
+> reputation service, AgentMesh, exposes a catalog of ~80,500 agent skills, ~4,800 MCP
+> servers and ~59,900 IDE extensions with per-version security scan verdicts, over a REST
+> API whose read endpoints serve anonymous callers.
+
+Generated 2026-07-19 by the API Evangelist enrichment pipeline. Knostic does not publish
+its own llms.txt (probed: 404 on www.knostic.ai, SPA catch-all on agentmesh.knostic.ai).
+
+## APIs
+
+- [AgentMesh API](https://agentmesh.knostic.ai/api): Reputation and threat intelligence for
+  agent skills, MCP servers and IDE extensions. Base URL `https://agentmesh.knostic.ai/api`.
+  12 operations. Bearer API key; catalog reads also answer anonymously (`X-Tier: anonymous`).
+
+### Operations
+
+- `GET /skills` — search the agent-skill catalog (q, status, source, hash, sort, page, limit)
+- `GET /skills/{skill_id}` — skill detail with version history and scan results
+- `GET /skills/{skill_id}/versions/{version_id}` — scan results for one skill version
+- `GET /mcp` — search the MCP server catalog
+- `GET /mcp/{server_id}` — MCP server detail with versions and scan results
+- `GET /mcp/{server_id}/versions/{version_id}` — scan results for one server version
+- `GET /extensions` — search IDE extensions with risk assessment (q, marketplace, status, hash)
+- `GET /extensions/{ext_id}` — extension detail with risk level, reasons and code evidence
+- `POST /scan/skill/{slug}` — trigger an on-demand skill scan (API key; 30/day)
+- `POST /scan/extension/{slug}` — trigger an on-demand extension scan (API key; 30/day)
+- `GET /scans` — your scan history; carries `X-Scan-Limit-Remaining`
+- `GET /scans/{scan_id}` — poll a scan to completion
+
+## Specs
+
+- [OpenAPI 3.1](openapi/knostic-agentmesh-openapi.yml): reconstructed from Knostic's own
+  published endpoint catalog; Knostic publishes no OpenAPI
+- [Overlay](overlays/knostic-agentmesh-overlay.yaml): API Evangelist enhancements
+- [Data model](data-model/knostic-data-model.yml): entity graph
+- [Authentication](authentication/knostic-authentication.yml)
+- [Conventions](conventions/knostic-conventions.yml)
+- [Error catalog](errors/knostic-problem-types.yml)
+- [Rate limits](rate-limits/knostic-rate-limits.yml)
+- [Conformance](conformance/knostic-conformance.yml)
+- [Lifecycle](lifecycle/knostic-lifecycle.yml)
+- [MCP candidate surface](mcp/knostic-mcp.yml)
+- [Agent Skills](skills/_index.yml)
+
+## Key semantics
+
+- Errors are a flat `{"detail": "..."}` object, not RFC 9457 problem+json.
+- Pagination is page-number: `page` + `limit` (max 200), with `total`/`page`/`limit` returned.
+  The result array is keyed per resource: `skills`, `mcpServers`, `extensions`, `scans`.
+- Scans are asynchronous submit-and-poll. There is **no idempotency key** — re-issuing a
+  scan POST creates a new job and spends another of the 30 daily credits.
+- `unscanned` does not mean safe; it means nobody has looked.
+- The `status` filter vocabulary (dangerous/risky/safe/unscanned) differs from the values
+  returned on rows (pass/warn/fail/gray, safe/low/medium/high/critical).
+- `fileSha256` is the cross-collection join key — every collection accepts a `hash` filter,
+  so artifacts are addressable by content rather than by name.
+
+## Open source
+
+- [AgentSonar](https://github.com/knostic/AgentSonar): Go CLI that detects shadow AI by
+  monitoring outbound traffic and scoring process-to-domain pairs
+- [OpenAnt](https://openant.knostic.ai): LLM-based vulnerability discovery — stage 1
+  detects, stage 2 attacks, what survives is a verified finding
+- [MCP-Scanner](https://github.com/knostic/MCP-Scanner): Shodan-based scanner for exposed
+  MCP servers
+- [openclaw-shield](https://github.com/knostic/openclaw-shield): five-layer security plugin
+  for OpenClaw agents
+- [openclaw-telemetry](https://github.com/knostic/openclaw-telemetry): agent observability
+  with redaction, hash-chain integrity and syslog/CEF SIEM forwarding
+- [openclaw-detect](https://github.com/knostic/openclaw-detect): MDM detection scripts
+- [open-tools](https://github.com/knostic/open-tools): vulnerable-npm-package scanner and
+  GlassWorm YARA suite
+- [extension-check-skill](https://github.com/knostic/extension-check-skill): Knostic's
+  published Agent Skill for auditing installed editor extensions
+
+## Docs
+
+- [Website](https://www.knostic.ai/)
+- [AgentMesh](https://agentmesh.knostic.ai/)
+- [API reference](https://agentmesh.knostic.ai/api)
+- [Blog](https://www.knostic.ai/blog)
+- [Glossary](https://www.knostic.ai/glossary)
+- [Security program](https://www.knostic.ai/security)
+- [Trust center](https://security.knostic.ai/) — SOC 2 Type 2
+- [Terms of use](https://www.knostic.ai/terms-of-service)
+- [Privacy policy](https://www.knostic.ai/privacy-policy)
+- [Kirin](https://www.getkirin.com/) — AI coding safety, free up to five users
+- [GitHub](https://github.com/knostic)
+
+## Not published
+
+Recorded as verified absences, not gaps to fill: no OpenAPI, no llms.txt, no
+`/.well-known/` surface (no security.txt, OIDC or api-catalog), no status page, no
+deprecation policy, no SLA, no API changelog, no webhooks or AsyncAPI event surface, no
+OAuth scopes, no client SDKs on any package registry, no vulnerability disclosure program,
+and no public pricing page.

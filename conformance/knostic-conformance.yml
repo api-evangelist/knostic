@@ -1,0 +1,77 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/knostic-agentmesh-openapi.yml
+docs: https://agentmesh.knostic.ai/api
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: >-
+    No provider-published OpenAPI exists; API Evangelist generated
+    openapi/knostic-agentmesh-openapi.yml from Knostic's own published endpoint catalog.
+- id: http-bearer-auth
+  conforms: true
+  evidence: 'securityScheme type http / scheme bearer (Authorization: Bearer <api_key>)'
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 securitySchemes and no documented OAuth flow on the public API.
+- id: oidc
+  conforms: false
+  evidence: >-
+    No /.well-known/openid-configuration. Descope brokers console browser login, but no
+    OIDC surface is exposed to API clients.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors are a flat {"detail": string} JSON object, not application/problem+json.
+    Verified live 2026-07-19.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on all Knostic hosts.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No deprecation or Sunset header policy published.
+- id: json-api
+  conforms: false
+  evidence: >-
+    Collection responses use per-resource keys (skills/mcpServers/extensions) and flat
+    page/limit/total, not the JSON:API document structure.
+- id: pagination
+  conforms: true
+  evidence: Page-number pagination via page + limit, with total/page/limit in every collection response.
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No idempotency-key contract; the two POST scan operations are quota-governed job
+    triggers returning a new scan_id per call.
+- id: rate-limit-headers
+  conforms: partial
+  evidence: >-
+    Custom X-Scan-Limit-Remaining header on GET /scans; no RFC 9239 / IETF RateLimit
+    header fields.
+- id: soc2-type2
+  conforms: true
+  evidence: >-
+    Published on the SafeBase trust center at https://security.knostic.ai/ and stated on
+    https://www.knostic.ai/security ("is SOC Type 2 certified").
+- id: iso-27001
+  conforms: unknown
+  evidence: >-
+    Not named publicly. The security page says Knostic validates practices against
+    "internationally recognized frameworks" and directs further certification detail to an
+    Account Executive.
+- id: gdpr
+  conforms: partial
+  evidence: >-
+    The privacy policy documents EEA/UK/Swiss transfers under standard contractual
+    clauses, and Knostic publishes a Data Privacy Agreement.
+- id: ccpa
+  conforms: true
+  evidence: >-
+    Privacy policy states "We do not sell your personal information for the intents and
+    purposes of the California Consumer Privacy Act (CCPA)."
+compliance_program:
+  published: true
+  url: https://security.knostic.ai/
+  certifications:
+  - SOC 2 Type 2
+  detail: security/knostic-trust-center.yml

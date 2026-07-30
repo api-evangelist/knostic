@@ -1,0 +1,90 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/knostic/AgentSonar
+name: agentsonar
+official: true
+language: go
+version: 1.1.5
+repo: https://github.com/knostic/AgentSonar
+scope: >-
+  AgentSonar is Knostic's first-party CLI. It is a local shadow-AI detection tool, NOT a
+  client for the AgentMesh API — it does not wrap AgentMesh operations. Knostic ships no
+  CLI for the AgentMesh API itself.
+description: >-
+  Watches outbound traffic on the host and answers which process is talking to which
+  domain and whether that is likely an AI tool. Associates each connection with a process
+  via socket ownership, records the contacted domain via TLS SNI or DNS, and assigns an AI
+  score (0–1) to each process–domain pair.
+install:
+  methods:
+  - type: release-binary
+    url: https://github.com/knostic/AgentSonar/releases
+    description: Download the binary for your platform.
+  - type: source
+    docs: https://github.com/knostic/AgentSonar/blob/main/docs/development.md
+  runtime_dependencies:
+    macos: none
+    debian_ubuntu: apt-get install libpcap0.8 libcap2-bin
+    fedora_rhel: dnf install libpcap libcap
+  permissions_setup:
+    command: agentsonar install
+    macos: Creates an access_bpf group and sets BPF device permissions.
+    linux: Sets cap_net_raw,cap_net_admin capabilities on the binary.
+commands:
+- group: monitoring
+  commands:
+  - command: agentsonar
+    description: Monitor AI domain events in the foreground.
+  - command: agentsonar start
+    description: Start the monitoring daemon in the background.
+  - command: agentsonar stop
+    description: Stop the daemon.
+  - command: agentsonar status
+    description: Check whether the daemon is running.
+- group: data
+  commands:
+  - command: agentsonar events --since 1h
+    description: Query stored events.
+  - command: agentsonar classify
+    description: Classify events from stdin (JSON lines) without running capture.
+  - command: agentsonar export
+    description: Export overrides.
+  - command: agentsonar import
+    description: Import overrides.
+- group: classification
+  commands:
+  - command: agentsonar agents
+    description: List, add or remove known AI agents.
+  - command: agentsonar ignore
+    description: List, add or remove noise domains.
+  - command: agentsonar triage
+    description: Interactively classify unknown, high-scoring process–domain pairs.
+  - command: agentsonar classifier
+    description: Manage external classifiers.
+- group: system
+  commands:
+  - command: agentsonar doctor
+    description: Check system health.
+  - command: agentsonar install
+    description: Set up BPF capture permissions.
+  - command: agentsonar uninstall
+    description: Remove BPF capture permissions.
+global_flags:
+- flag: -a
+  description: All domains, not just AI.
+- flag: -j
+  description: JSON output.
+- flag: -i <iface>
+  description: 'Network interface (default: en0).'
+- flag: --enable-pid0
+  description: Include traffic without process association.
+scoring_model:
+  known_agents: >-
+    User-defined agents (e.g. process `claude*` → `*.anthropic.com`) score 1.0.
+  unknown: >-
+    Scored by a built-in heuristic classifier on traffic shape — byte/packet asymmetry,
+    small packets, long-lived or streaming connections, programmatic TLS. No hardcoded AI
+    domain list; a high score means likely shadow AI.
+  noise: Domains marked as noise score 0.
+interoperability:
+  sigma: Supports Sigma rule export/import (added in 1.0.0).

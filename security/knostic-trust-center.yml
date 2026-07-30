@@ -1,0 +1,52 @@
+generated: '2026-07-19'
+method: searched
+probe: true
+source: https://security.knostic.ai/
+url: https://security.knostic.ai/
+platform: SafeBase
+tagline: >-
+  Use this Knostic Trust Center to learn about our security posture and request access to
+  our security documentation.
+certifications:
+- SOC 2 Type 2
+compliance_documentation:
+- ProcessUnity compliance documentation
+available_on_request:
+- Product architecture
+- Penetration testing reports
+- Vulnerability assessments
+- Data flow diagrams
+- Self-assessments
+access_model: >-
+  Sensitive artifacts are gated — visitors request access to the security documentation
+  rather than downloading it anonymously.
+sub_processors:
+- Amazon Web Services
+- Cloudflare
+- Descope
+- Groundcover
+- Sentry
+security_program_page: https://www.knostic.ai/security
+security_program_summary: >-
+  The public security page states Knostic "is SOC Type 2 certified" and describes an
+  information security program covering software development lifecycle management,
+  incident response, encryption in transit and at rest, data masking and hashing, vendor
+  management, access controls, logging and monitoring, and awareness training. Knostic
+  states it "engages reputable and accredited auditors and assessors to validate our
+  security practices against internationally recognized frameworks."
+vulnerability_disclosure: none published
+notes: >-
+  No vulnerability disclosure program, bug bounty, or dedicated security reporting contact
+  was found on the trust center, the security page, or at /.well-known/security.txt (404).
+  General contact is support@knostic.ai.
+evidence:
+- source: https://security.knostic.ai/
+  keywords:
+  - soc 2 type 2
+  - trust center
+  - sub-processors
+  - safebase
+- source: https://www.knostic.ai/security
+  keywords:
+  - soc type 2 certified
+  - information security program

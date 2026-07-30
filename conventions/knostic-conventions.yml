@@ -1,0 +1,129 @@
+generated: '2026-07-19'
+method: searched
+source: https://agentmesh.knostic.ai/api
+description: >-
+  Cross-cutting request/response semantics for the Knostic AgentMesh API, captured from the
+  provider's published API reference and verified against live responses on 2026-07-19.
+authentication:
+  style: bearer-api-key
+  header: 'Authorization: Bearer <api_key>'
+  anonymous_reads: true
+  detail: authentication/knostic-authentication.yml
+pagination:
+  style: page-number
+  params:
+  - name: page
+    default: 1
+    description: Page number (1-indexed)
+  - name: limit
+    default: 50
+    max: 200
+    description: Results per page (1–200). /scans defaults to 20 with a max of 100.
+  response_fields:
+  - total
+  - page
+  - limit
+  collection_key: >-
+    The result array is keyed per resource rather than a generic `data` envelope:
+    `skills`, `mcpServers`, `extensions`, `scans`.
+  notes: >-
+    No cursor or Link-header pagination. Callers page by incrementing `page` until
+    page*limit >= total.
+search_and_filter:
+  full_text:
+    param: q
+    behaviour: >-
+      Case-insensitive ILIKE match. Skills/MCP match name + description; extensions also
+      match publisher.
+  sort:
+    param: sort
+    direction_param: dir
+    values:
+      skills: [recent, name, status, stars, scanned]
+      mcp: [recent, name, status, stars, scanned]
+      extensions: [recent, name, stars, status, rating, scanned, market]
+    default: recent
+    direction_default: >-
+      DESC for recent/stars, ASC for name.
+  filters:
+  - name: status
+    values: [dangerous, risky, safe, unscanned]
+    description: Filter by scan/risk status
+  - name: source
+    description: Filter by discovery source URL (ILIKE), skills and MCP only
+  - name: marketplace
+    description: Filter by extension marketplace (e.g. vscode, open-vsx), extensions only
+  - name: hash
+    description: >-
+      Filter by SHA-256 (64 hex chars) of the archived artifact bytes. For skills/MCP this
+      matches across versions — the artifact appears if any version has that hash, and the
+      row returned is the most recent matching version. Composes with q, status and source.
+  composition: q, status, source/marketplace and hash compose as an AND filter.
+error_envelope:
+  format: custom
+  rfc9457: false
+  shape:
+    detail: string
+  example: '{"detail": "not found"}'
+  verified: 'Live GET /api/skills/999999999 on 2026-07-19 returned {"detail":"not found"}'
+  catalog: errors/knostic-problem-types.yml
+idempotency:
+  supported: false
+  notes: >-
+    AgentMesh publishes no idempotency-key contract. The two write operations
+    (POST /scan/skill/{slug}, POST /scan/extension/{slug}) are scan-job triggers that
+    return a fresh scan_id per call and are governed by a daily quota rather than by
+    request de-duplication. No Idempotency pointer is emitted for this provider.
+rate_limiting:
+  signal_headers:
+  - name: X-Scan-Limit-Remaining
+    description: Remaining daily scan credits, returned on GET /scans
+  quotas:
+  - scope: api-key
+    limit: 30
+    period: day
+    applies_to:
+    - POST /scan/skill/{slug}
+    - POST /scan/extension/{slug}
+  status_codes:
+  - 429 Daily scan limit exceeded (30/day)
+  - 503 Scan queue is full, try again later
+  detail: rate-limits/knostic-rate-limits.yml
+tiering:
+  header: X-Tier
+  values_observed: [anonymous]
+  description: >-
+    Responses advertise the caller's service tier. Unauthenticated reads are served as
+    `X-Tier: anonymous`.
+async_pattern:
+  style: submit-and-poll
+  description: >-
+    Scans are asynchronous. POST /scan/{skill|extension}/{slug} returns immediately with
+    scan_id, status=pending, position_in_queue and estimated_seconds; the caller polls
+    GET /scans/{scan_id} until status is completed or failed. There is no webhook or
+    callback surface.
+versioning:
+  scheme: unversioned-path
+  current: none
+  base_path: /api
+  notes: >-
+    The public base path carries no version segment (https://agentmesh.knostic.ai/api).
+    Scan verdicts are themselves versioned per scanner via scannerName + scannerVersion.
+  detail: lifecycle/knostic-lifecycle.yml
+content_type:
+  request: application/json
+  response: application/json
+  note: >-
+    Console artefact upload (POST /api/console/artefacts) uses multipart/form-data, but
+    that is a session-scoped console endpoint, not part of the public API.
+naming:
+  resource_fields: camelCase (e.g. gitRepo, scanStatus, fileSha256)
+  scan_fields: snake_case (e.g. scan_id, scan_type, position_in_queue, created_at)
+  note: >-
+    The catalog resources and the scan resources use different casing conventions;
+    clients must not assume a single style across the whole API.
+request_tracing:
+  request_id_header: none published
+  observed: >-
+    Live responses carry x-cloud-trace-context (Google Cloud infrastructure header), which
+    is not documented as a client-facing correlation contract.

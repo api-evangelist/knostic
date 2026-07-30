@@ -1,0 +1,127 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  Registry probes (npm, PyPI, pkg.go.dev, RubyGems, NuGet, Maven Central, crates.io,
+  Packagist) plus the knostic GitHub organization.
+summary: >-
+  Knostic ships NO client SDK for the AgentMesh API in any language — there is no
+  first-party HTTP client library on any public registry. What Knostic does distribute is a
+  set of first-party open-source security TOOLS (a Go CLI, Python scanners, TypeScript
+  agent plugins, shell tooling), published as GitHub releases and installed through their
+  host's own plugin mechanism rather than through npm/PyPI. Those are catalogued below and
+  are NOT SDKs; no `SDKs` pointer is emitted for this provider.
+registry_probes:
+- registry: npm
+  query: knostic
+  results: 0
+  note: '@knostic scope is unpublished; @knostic/openclaw-shield returned "Not found" on the registry.'
+- registry: pypi
+  query: knostic
+  results: 0
+  note: https://pypi.org/pypi/knostic/json returned 404.
+- registry: pkg.go.dev
+  results: 0
+  note: AgentSonar is distributed as prebuilt release binaries, not as an importable module.
+- registry: rubygems
+  results: 0
+- registry: nuget
+  results: 0
+- registry: maven-central
+  results: 0
+- registry: crates.io
+  results: 0
+- registry: packagist
+  results: 0
+sdks: []
+packages:
+- name: agentsonar
+  kind: cli
+  language: go
+  registry: github-releases
+  url: https://github.com/knostic/AgentSonar
+  install: Download the binary for your platform from https://github.com/knostic/AgentSonar/releases
+  version: 1.1.5
+  license: null
+  official: true
+  description: >-
+    Detects shadow AI agents by monitoring outbound network traffic, associating
+    connections to processes, and scoring process-to-domain pairs for LLM-like behaviour.
+  runtime_dependencies:
+    debian_ubuntu: apt-get install libpcap0.8 libcap2-bin
+    fedora_rhel: dnf install libpcap libcap
+    macos: none
+  detail: cli/knostic-cli.yml
+- name: OpenAnt
+  kind: tool
+  language: python
+  registry: github
+  url: https://github.com/knostic/OpenAnt
+  homepage: https://openant.knostic.ai
+  official: true
+  description: >-
+    Open-source LLM-based vulnerability discovery. Stage 1 detects, stage 2 attacks; what
+    survives is reported as a verified finding, minimising false positives and negatives.
+- name: MCP-Scanner
+  kind: tool
+  language: python
+  registry: github
+  url: https://github.com/knostic/MCP-Scanner
+  official: true
+  description: >-
+    Shodan-based scanner for discovering, verifying and enumerating exposed MCP servers.
+- name: openclaw-shield
+  kind: agent-plugin
+  language: typescript
+  registry: openclaw-plugins
+  url: https://github.com/knostic/openclaw-shield
+  install: openclaw plugins install @knostic/openclaw-shield
+  license: Apache-2.0
+  official: true
+  status: alpha
+  description: >-
+    Five-layer security plugin for OpenClaw agents — prompt guard, output scanner, tool
+    blocker, input audit, and a security gate tool that returns ALLOWED/DENIED before exec
+    or file-read.
+  note: >-
+    The documented install string uses the @knostic npm scope, but the package is not
+    resolvable on the public npm registry; install from the repository.
+- name: openclaw-telemetry
+  kind: agent-plugin
+  language: typescript
+  registry: openclaw-plugins
+  url: https://github.com/knostic/openclaw-telemetry
+  install: openclaw plugins install ./openclaw-telemetry
+  license: Apache-2.0
+  official: true
+  description: >-
+    Observability for OpenClaw — captures tool calls, LLM usage and agent lifecycle to
+    JSONL with redaction, SHA-256 hash-chain integrity, rate limiting, rotation and
+    syslog/CEF forwarding to SIEM.
+- name: openclaw-detect
+  kind: tool
+  language: shell
+  registry: github
+  url: https://github.com/knostic/openclaw-detect
+  official: true
+  description: Detection scripts for MDM deployment to identify OpenClaw installations.
+- name: open-tools
+  kind: tool
+  language: shell
+  registry: github
+  url: https://github.com/knostic/open-tools
+  official: true
+  description: >-
+    Standalone tools — a vulnerable-npm-package scanner covering 27 known supply-chain
+    attack packages, and a GlassWorm YARA detection suite.
+- name: extension-check
+  kind: agent-skill
+  language: markdown
+  registry: claude-code-plugin-marketplace
+  url: https://github.com/knostic/extension-check-skill
+  install: /plugin marketplace add github.com/knostic/extension-check-skill
+  license: MIT
+  official: true
+  description: >-
+    Agent Skill that audits installed Cursor/VS Code/Copilot extensions against AgentMesh.
+    Installs as a Claude Code plugin or a native Cursor Agent Skill.
+  detail: skills/_index.yml

@@ -1,0 +1,55 @@
+{
+    "skills": [
+        {
+            "id": 264255997,
+            "name": "ui",
+            "gitRepo": "https://github.com/tw93/Waza/tree/c1a0d6e38c47636a50e40f3123c3e66cb832587d/skills/ui",
+            "skillPath": "skills/ui/SKILL.md",
+            "description": "Produces distinctive, production-grade UI for pages, components, visual interfaces, typography, and screenshot-driven polish. Use when users ask in any language for UI, page, component, frontend, typography, screenshot-grounded visual polish, or complaints that a screen looks unclear, ugly, inconsistent, or visually wrong. Not for backend logic or data pipelines.",
+            "sourceUrl": "https://github.com/jqueryscript/awesome-claude-code",
+            "stars": 6533,
+            "license": "MIT",
+            "archived": false,
+            "latestVersionAt": "2026-07-19T15:21:19+00:00",
+            "scanStatus": "low",
+            "latestScanAt": "2026-07-19T15:50:09.329311+00:00",
+            "contributor": "tw93",
+            "fileSha256": "89c6695004b5b14b5857b1ce447bfb1017c6a0cc130d143c6bc613108dd52a2e"
+        },
+        {
+            "id": 276428876,
+            "name": "write",
+            "gitRepo": "https://github.com/tw93/Waza/tree/c1a0d6e38c47636a50e40f3123c3e66cb832587d/skills/write",
+            "skillPath": "skills/write/SKILL.md",
+            "description": "Rewrites and polishes prose in Chinese or English, removes AI-like wording, and reviews product localization copy while preserving intent for drafts, docs, release notes, launch copy, and social posts. Use when users ask in any language to draft, rewrite, proofread, localize, polish release notes, remove AI-like wording, or prepare launch and social copy. Not for code comments, commit messages, or inline docs.",
+            "sourceUrl": "https://github.com/jqueryscript/awesome-claude-code",
+            "stars": 6533,
+            "license": "MIT",
+            "archived": false,
+            "latestVersionAt": "2026-07-19T15:21:19+00:00",
+            "scanStatus": "medium",
+            "latestScanAt": "2026-07-19T15:49:21.061644+00:00",
+            "contributor": "tw93",
+            "fileSha256": "d766c26f80259b2c15a50abcc79d8784ef3ddebd331b27201c9787871eb75701"
+        },
+        {
+            "id": 410823934,
+            "name": "check",
+            "gitRepo": "https://github.com/tw93/Waza/tree/c1a0d6e38c47636a50e40f3123c3e66cb832587d/plugins/waza/skills/check",
+            "skillPath": "plugins/waza/skills/check/SKILL.md",
+            "description": "Reviews code diffs, PRs, issue queues, release readiness, commits, pushes, publishing, and project audits. Use when users ask in any language for code review, issue or PR triage, release gates, publishing follow-through, or project audits. Not for debugging root causes or prose review.",
+            "sourceUrl": "https://github.com/jqueryscript/awesome-claude-code",
+            "stars": 6533,
+            "license": "MIT",
+            "archived": false,
+            "latestVersionAt": "2026-07-19T15:21:19+00:00",
+            "scanStatus": "medium",
+            "latestScanAt": "2026-07-19T15:50:09.191380+00:00",
+            "contributor": "tw93",
+            "fileSha256": "f1b297c9ebd9974539fae1e6b13637f71dd73f01d90f9c55ccd6a889105fae1a"
+        }
+    ],
+    "total": 80504,
+    "page": 1,
+    "limit": 3
+}

@@ -1,0 +1,52 @@
+{
+    "mcpServers": [
+        {
+            "id": 1150777206,
+            "name": "md-redline",
+            "gitRepo": "https://github.com/dejuknow/md-redline/tree/37f29990dc78bb55c903d4fc733303d381fd452d/",
+            "serverPath": "",
+            "description": "Inline review comments for markdown specs. Built-in MCP server hands feedback directly to your AI agent.",
+            "sourceUrl": "https://www.npmjs.com/search?q=keywords:mcp-server",
+            "stars": 19,
+            "license": "MIT",
+            "archived": false,
+            "latestVersionAt": "2026-07-19T05:01:21+00:00",
+            "scanStatus": "low",
+            "latestScanAt": "2026-07-19T05:30:10.094838+00:00",
+            "fileSha256": "68545eecf46a1ae9010ffbf07a84bf470369ee32eec5c402b4424edaa7e68556"
+        },
+        {
+            "id": 905244737,
+            "name": "mac_messages_mcp",
+            "gitRepo": "https://github.com/carterlasalle/mac_messages_mcp/tree/3f750fc0cf93871bcae4435a0492f07914604e31/",
+            "serverPath": "",
+            "description": "An MCP server that securely interfaces with your iMessage database via the Model Context Protocol (MCP), allowing LLMs to query and analyze iMessage conversations. It includes robust phone number validation, attachment processing, contact management, group chat handling, and full support for sending and receiving messages.",
+            "sourceUrl": "https://github.com/modelcontextprotocol/servers",
+            "stars": 248,
+            "license": "MIT",
+            "archived": false,
+            "latestVersionAt": "2026-07-19T04:52:47+00:00",
+            "scanStatus": "safe",
+            "latestScanAt": "2026-07-19T05:30:38.295822+00:00",
+            "fileSha256": "b991084a393a5daf238603c547e0054e5c13a83a7a5cc0120eb766f43e86c0ea"
+        },
+        {
+            "id": 1644346612,
+            "name": "neo",
+            "gitRepo": "https://github.com/neomjs/neo/tree/c83f73923c1f9b8a7e6df2e1c58c3ddda2e7738e/",
+            "serverPath": "",
+            "description": "Neo.mjs is a self-evolving software organism: a professional end-to-end AI engineering team whose cross-model swarm inhabits live apps via Neural Link, Active Hybrid GraphRAG, DreamService, and self-healing loops.",
+            "sourceUrl": "https://www.npmjs.com/search?q=keywords:mcp-server",
+            "stars": 3237,
+            "license": "MIT",
+            "archived": false,
+            "latestVersionAt": "2026-07-19T04:50:42+00:00",
+            "scanStatus": "low",
+            "latestScanAt": "2026-07-19T05:31:01.250961+00:00",
+            "fileSha256": "f78afe9fb1717349d83fab3fa3523ef144a2512755782bb4d91d3c2a916f571d"
+        }
+    ],
+    "total": 4783,
+    "page": 1,
+    "limit": 3
+}
