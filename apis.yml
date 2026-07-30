@@ -1,25 +1,228 @@
 aid: knostic
 name: Knostic
-description: Knostic is a company surfaced as a portfolio company of seedcamp and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Knostic secures the AI agent supply chain inside the enterprise. Its platform discovers
+  shadow AI, coding assistants, MCP servers and IDE extensions in use across an
+  organization, then scans them for prompt injection, data exfiltration, secret and PII
+  leakage, and destructive commands. Knostic runs AgentMesh, a public reputation and
+  threat-intelligence service that continuously discovers, tracks and scans AI agent
+  skills, Model Context Protocol servers, and VS Code / IDE marketplace extensions —
+  roughly 80,500 skills, 4,800 MCP servers and 59,900 extensions as of July 2026 — and
+  exposes that catalog with per-version scan verdicts through a REST API whose read
+  endpoints answer anonymous callers. Knostic also ships a substantial open-source
+  portfolio: AgentSonar (shadow-AI network detection), OpenAnt (LLM-based vulnerability
+  discovery), MCP-Scanner, and security and telemetry plugins for OpenClaw agents.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.knostic.ai/og-image.png
 url: https://raw.githubusercontent.com/api-evangelist/knostic/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - seedcamp
-x-tier: stub
-x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-apis: []
+- Security
+- Artificial Intelligence
+- AI Agents
+- Agent Security
+- Supply Chain Security
+- Model Context Protocol
+- Threat Intelligence
+- Developer Tools
+- Shadow AI
+apis:
+- aid: knostic:knostic-extensions-api
+  name: Knostic extensions API
+  description: VS Code / IDE marketplace extensions with risk assessment
+  humanURL: https://agentmesh.knostic.ai/api
+  baseURL: https://agentmesh.knostic.ai/api
+  tags:
+  - extensions
+  properties:
+  - type: OpenAPI
+    url: openapi/knostic-extensions-api-openapi.yml
+  - type: Documentation
+    url: https://agentmesh.knostic.ai/api
+  - type: APIReference
+    url: https://agentmesh.knostic.ai/api
+  - type: Authentication
+    url: authentication/knostic-authentication.yml
+  - type: Conventions
+    url: conventions/knostic-conventions.yml
+  - type: ErrorCatalog
+    url: errors/knostic-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/knostic-rate-limits.yml
+  - type: DataModel
+    url: data-model/knostic-data-model.yml
+  - type: Examples
+    url: examples/knostic-list-skills-response.json
+  - type: Sandbox
+    url: sandbox/knostic-sandbox.yml
+- aid: knostic:knostic-mcp-api
+  name: Knostic mcp API
+  description: Model Context Protocol servers discovered and scanned by AgentMesh
+  humanURL: https://agentmesh.knostic.ai/api
+  baseURL: https://agentmesh.knostic.ai/api
+  tags:
+  - mcp
+  properties:
+  - type: OpenAPI
+    url: openapi/knostic-mcp-api-openapi.yml
+  - type: Documentation
+    url: https://agentmesh.knostic.ai/api
+  - type: APIReference
+    url: https://agentmesh.knostic.ai/api
+  - type: Authentication
+    url: authentication/knostic-authentication.yml
+  - type: Conventions
+    url: conventions/knostic-conventions.yml
+  - type: ErrorCatalog
+    url: errors/knostic-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/knostic-rate-limits.yml
+  - type: DataModel
+    url: data-model/knostic-data-model.yml
+  - type: Examples
+    url: examples/knostic-list-skills-response.json
+  - type: Sandbox
+    url: sandbox/knostic-sandbox.yml
+- aid: knostic:knostic-scans-api
+  name: Knostic scans API
+  description: On-demand security scans and scan history (API key required)
+  humanURL: https://agentmesh.knostic.ai/api
+  baseURL: https://agentmesh.knostic.ai/api
+  tags:
+  - scans
+  properties:
+  - type: OpenAPI
+    url: openapi/knostic-scans-api-openapi.yml
+  - type: Documentation
+    url: https://agentmesh.knostic.ai/api
+  - type: APIReference
+    url: https://agentmesh.knostic.ai/api
+  - type: Authentication
+    url: authentication/knostic-authentication.yml
+  - type: Conventions
+    url: conventions/knostic-conventions.yml
+  - type: ErrorCatalog
+    url: errors/knostic-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/knostic-rate-limits.yml
+  - type: DataModel
+    url: data-model/knostic-data-model.yml
+  - type: Examples
+    url: examples/knostic-list-skills-response.json
+  - type: Sandbox
+    url: sandbox/knostic-sandbox.yml
+- aid: knostic:knostic-skills-api
+  name: Knostic skills API
+  description: AI agent skills (SKILL.md) discovered and scanned by AgentMesh
+  humanURL: https://agentmesh.knostic.ai/api
+  baseURL: https://agentmesh.knostic.ai/api
+  tags:
+  - skills
+  properties:
+  - type: OpenAPI
+    url: openapi/knostic-skills-api-openapi.yml
+  - type: Documentation
+    url: https://agentmesh.knostic.ai/api
+  - type: APIReference
+    url: https://agentmesh.knostic.ai/api
+  - type: Authentication
+    url: authentication/knostic-authentication.yml
+  - type: Conventions
+    url: conventions/knostic-conventions.yml
+  - type: ErrorCatalog
+    url: errors/knostic-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/knostic-rate-limits.yml
+  - type: DataModel
+    url: data-model/knostic-data-model.yml
+  - type: Examples
+    url: examples/knostic-list-skills-response.json
+  - type: Sandbox
+    url: sandbox/knostic-sandbox.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/knostic-agentic-access.yml
 - type: Website
-  url: http://knostic.ai
+  url: https://www.knostic.ai/
+- type: DeveloperPortal
+  url: https://agentmesh.knostic.ai/
+- type: Documentation
+  url: https://agentmesh.knostic.ai/api
+- type: APIReference
+  url: https://agentmesh.knostic.ai/api
+- type: Login
+  url: https://agentmesh.knostic.ai/console
+- type: Support
+  url: https://www.knostic.ai/contact
+- type: Blog
+  url: https://www.knostic.ai/blog
+- type: GitHubOrganization
+  url: https://github.com/knostic
+- type: TermsOfService
+  url: https://www.knostic.ai/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.knostic.ai/privacy-policy
+- type: Security
+  url: https://www.knostic.ai/security
+- type: Compliance
+  url: https://security.knostic.ai/
+- type: TrustCenter
+  url: security/knostic-trust-center.yml
+- type: DomainSecurity
+  url: security/knostic-domain-security.yml
+- type: Authentication
+  url: authentication/knostic-authentication.yml
+- type: Conventions
+  url: conventions/knostic-conventions.yml
+- type: ErrorCatalog
+  url: errors/knostic-problem-types.yml
+- type: RateLimits
+  url: rate-limits/knostic-rate-limits.yml
+- type: Conformance
+  url: conformance/knostic-conformance.yml
+- type: Lifecycle
+  url: lifecycle/knostic-lifecycle.yml
+- type: ChangeLog
+  url: changelog/knostic-changelog.yml
+- type: DataModel
+  url: data-model/knostic-data-model.yml
+- type: Packages
+  url: packages/knostic-packages.yml
+- type: CLI
+  url: cli/knostic-cli.yml
+- type: Sandbox
+  url: sandbox/knostic-sandbox.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/knostic-llms.txt
+- type: Examples
+  url: examples/knostic-list-skills-response.json
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
