@@ -163,6 +163,10 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: MCPServer
+  url: mcp/knostic-mcp.yml
+- type: Overlay
+  url: overlays/knostic-agentmesh-overlay.yaml
 - type: AgenticAccess
   url: agentic-access/knostic-agentic-access.yml
 - type: Website
