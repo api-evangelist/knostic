@@ -2,13 +2,11 @@ generated: '2026-07-19'
 method: derived
 status: candidate
 source: openapi/knostic-agentmesh-openapi.yml
-search_result: >-
-  No official hosted or remote MCP server is published by Knostic. Searched the knostic
-  GitHub organization (8 public repos), the AgentMesh site, and the npm @knostic scope —
-  none ships an MCP server. Note the irony worth recording: AgentMesh's business is
-  scanning OTHER people's MCP servers (4,783 catalogued as of 2026-07-19) while exposing
-  none of its own. The tools below are a DERIVED candidate surface, one per AgentMesh
-  OpenAPI operation, not a Knostic product.
+search_result: 'No official hosted or remote MCP server is published by Knostic. Searched the knostic
+  GitHub organization (8 public repos), the AgentMesh site, and the npm @knostic scope — none ships an
+  MCP server. Note the irony worth recording: AgentMesh''s business is scanning OTHER people''s MCP servers
+  (4,783 catalogued as of 2026-07-19) while exposing none of its own. The tools below are a DERIVED candidate
+  surface, one per AgentMesh OpenAPI operation, not a Knostic product.'
 server:
   name: knostic-agentmesh
   transport: http
@@ -17,15 +15,13 @@ server:
   auth: 'Authorization: Bearer <AGENTMESH_API_KEY> (read tools also work anonymously)'
 tools:
 - name: list_skills
-  description: >-
-    Search the AgentMesh catalog of AI agent skills with scan status, stars and metadata.
-    Supports full-text search, status filtering and SHA-256 hash lookup.
+  description: Search the AgentMesh catalog of AI agent skills with scan status, stars and metadata. Supports
+    full-text search, status filtering and SHA-256 hash lookup.
   source_operation: openapi/knostic-agentmesh-openapi.yml#listSkills
   requires_api_key: false
 - name: get_skill
-  description: >-
-    Get full details for one skill including version history, scan results for the
-    selected version, and repository metadata.
+  description: Get full details for one skill including version history, scan results for the selected
+    version, and repository metadata.
   source_operation: openapi/knostic-agentmesh-openapi.yml#getSkill
   requires_api_key: false
 - name: get_skill_version_scans
@@ -33,13 +29,11 @@ tools:
   source_operation: openapi/knostic-agentmesh-openapi.yml#getVersionScans
   requires_api_key: false
 - name: list_mcp_servers
-  description: >-
-    Search the AgentMesh catalog of MCP servers with scan status, stars and metadata.
+  description: Search the AgentMesh catalog of MCP servers with scan status, stars and metadata.
   source_operation: openapi/knostic-agentmesh-openapi.yml#listMcp
   requires_api_key: false
 - name: get_mcp_server
-  description: >-
-    Get full details for one MCP server including version history and scan results.
+  description: Get full details for one MCP server including version history and scan results.
   source_operation: openapi/knostic-agentmesh-openapi.yml#getMcp
   requires_api_key: false
 - name: get_mcp_version_scans
@@ -47,45 +41,44 @@ tools:
   source_operation: openapi/knostic-agentmesh-openapi.yml#getMcpVersionScans
   requires_api_key: false
 - name: list_extensions
-  description: >-
-    Search VS Code / IDE marketplace extensions with risk assessment data. Filter by risk
-    status, marketplace, or VSIX SHA-256 hash.
+  description: Search VS Code / IDE marketplace extensions with risk assessment data. Filter by risk status,
+    marketplace, or VSIX SHA-256 hash.
   source_operation: openapi/knostic-agentmesh-openapi.yml#listExtensions
   requires_api_key: false
 - name: get_extension
-  description: >-
-    Get full risk detail for one extension including risk level, reasons, and code-snippet
+  description: Get full risk detail for one extension including risk level, reasons, and code-snippet
     evidence with file paths.
   source_operation: openapi/knostic-agentmesh-openapi.yml#getExtension
   requires_api_key: false
 - name: scan_skill
-  description: >-
-    Trigger an on-demand security scan of a skill by owner:repo[:skill_name] slug. Returns
+  description: Trigger an on-demand security scan of a skill by owner:repo[:skill_name] slug. Returns
     a scan_id to poll. Consumes one of 30 daily scan credits.
   source_operation: openapi/knostic-agentmesh-openapi.yml#scanSkill
   requires_api_key: true
   write: true
 - name: scan_extension
-  description: >-
-    Trigger an on-demand security scan of a marketplace extension by marketplace:id slug.
-    Returns a scan_id to poll. Consumes one of 30 daily scan credits.
+  description: Trigger an on-demand security scan of a marketplace extension by marketplace:id slug. Returns
+    a scan_id to poll. Consumes one of 30 daily scan credits.
   source_operation: openapi/knostic-agentmesh-openapi.yml#scanExtension
   requires_api_key: true
   write: true
 - name: list_scans
-  description: >-
-    List this API key's scan history with status and result; response carries remaining
-    daily scan credits.
+  description: List this API key's scan history with status and result; response carries remaining daily
+    scan credits.
   source_operation: openapi/knostic-agentmesh-openapi.yml#listScans
   requires_api_key: true
 - name: get_scan
-  description: >-
-    Poll one scan by id. Returns queue position and time estimate while pending, then the
-    result and details once completed.
+  description: Poll one scan by id. Returns queue position and time estimate while pending, then the result
+    and details once completed.
   source_operation: openapi/knostic-agentmesh-openapi.yml#getScan
   requires_api_key: true
-notes: >-
-  Knostic's own extension-check Agent Skill explicitly instructs agents NOT to call the
-  AgentMesh API endpoints and to use the rendered search UI instead — see
-  skills/knostic-extension-check.md. Any MCP server built from this candidate surface
-  should be treated as an API-first alternative to that skill, not as an endorsement of it.
+notes: Knostic's own extension-check Agent Skill explicitly instructs agents NOT to call the AgentMesh
+  API endpoints and to use the rendered search UI instead — see skills/knostic-extension-check.md. Any
+  MCP server built from this candidate surface should be treated as an API-first alternative to that skill,
+  not as an endorsement of it.
+deployment:
+  mode: none
+  verified: derived
+  tools: 12
+  checked: '2026-08-12'
+  source: catalog MCP census

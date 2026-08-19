@@ -1,0 +1,735 @@
+{
+  "item": [
+    {
+      "id": "7ff40988-f56f-4fc9-b778-dce6bc574caa",
+      "name": "skills",
+      "description": {
+        "content": "AI agent skills (SKILL.md) discovered and scanned by AgentMesh",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "768e6dbd-3999-4d10-9032-1aa3bba25352",
+          "name": "List skills",
+          "request": {
+            "name": "List skills",
+            "description": {
+              "content": "Returns a paginated list of AI agent skills with scan status, stars, and metadata. Supports full-text search across name and description fields.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "skills"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Search query — matches against skill name and description (ILIKE)"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "recent",
+                  "description": "Sort field"
+                },
+                {
+                  "disabled": false,
+                  "key": "dir",
+                  "value": "<string>",
+                  "description": "Sort direction. Defaults to DESC for recent/stars, ASC for name"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by scan status"
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "Filter by source URL (ILIKE match)"
+                },
+                {
+                  "disabled": false,
+                  "key": "hash",
+                  "value": "<string>",
+                  "description": "Filter by SHA-256 hash (64 hex characters) of the archived artifact bytes. Matches across versions: the artifact appears if any of its versions has this hash, even if the latest version was rebuilt with a different hash. The displayed row is the most recent version that matched. Composes with q, status, and source."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (1-indexed)"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Results per page (1–200)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fafd9ae6-aa0d-43a9-a93a-33587a06adca",
+              "name": "Paginated array of skill summaries with scan metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "recent"
+                    },
+                    {
+                      "key": "dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hash",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"skills\": [\n    {\n      \"id\": 42,\n      \"name\": \"browser-use\",\n      \"gitRepo\": \"https://github.com/anthropics/browser-use\",\n      \"skillPath\": \"SKILL.md\",\n      \"description\": \"Browser automation skill for web agents\",\n      \"sourceUrl\": \"https://github.com/anthropics/awesome-mcp-servers\",\n      \"stars\": 1840,\n      \"license\": \"MIT\",\n      \"archived\": false,\n      \"latestVersionAt\": \"2026-01-15T09:30:00\",\n      \"scanStatus\": \"pass\",\n      \"latestScanAt\": \"2026-01-16T02:00:00\",\n      \"contributor\": \"hwchase17\",\n      \"fileSha256\": \"31795b157afee1d4441887452f6891c2b6c20538b8ed8a9b1c2d3e4f50617283\"\n    }\n  ],\n  \"total\": 1,\n  \"page\": 1,\n  \"limit\": 50\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0fc2af06-a048-4188-a202-87a094e35904",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "recent"
+                    },
+                    {
+                      "key": "dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hash",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"missing or invalid api key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a98db2a8-96e4-43ae-8eda-ad178b7fbf45",
+          "name": "Get skill",
+          "request": {
+            "name": "Get skill",
+            "description": {
+              "content": "Returns full details for a single skill including version history, scan results for the selected version, and repository metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "skills",
+                ":skill_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version_id",
+                  "value": "<integer>",
+                  "description": "Select a specific version for scan results. Defaults to the latest version."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "skill_id",
+                  "description": "(Required) Skill ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d3a95881-8912-47fe-8fbc-b7f32862d456",
+              "name": "Full skill object with nested versions and scan results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":skill_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version_id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "skill_id",
+                      "description": "(Required) Skill ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 42,\n  \"name\": \"browser-use\",\n  \"gitRepo\": \"https://github.com/anthropics/browser-use\",\n  \"skillPath\": \"SKILL.md\",\n  \"description\": \"Browser automation skill for web agents\",\n  \"sourceUrl\": \"https://github.com/anthropics/awesome-mcp-servers\",\n  \"scanStatus\": \"pass\",\n  \"stars\": 1840,\n  \"forks\": 210,\n  \"license\": \"MIT\",\n  \"archived\": false,\n  \"repoCreatedAt\": \"2025-03-01T00:00:00\",\n  \"lastPushedAt\": \"2026-01-15T09:30:00\",\n  \"contributor\": \"hwchase17\",\n  \"versions\": [\n    {\n      \"id\": 101,\n      \"commitHash\": \"a1b2c3d\",\n      \"commitTimestamp\": \"2026-01-15T09:30:00\",\n      \"scanSummary\": \"pass\",\n      \"fileSha256\": \"31795b157afee1d4441887452f6891c2b6c20538b8ed8a9b1c2d3e4f50617283\"\n    }\n  ],\n  \"scanResults\": [\n    {\n      \"scannerName\": \"nova\",\n      \"scannerVersion\": \"1.2.0\",\n      \"result\": \"pass\",\n      \"details\": {\n        \"rulesMatched\": 0,\n        \"rulesChecked\": 47\n      },\n      \"scannedAt\": \"2026-01-16T02:00:00\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e6ef230-8772-46bc-87fe-98108a4c55b3",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":skill_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version_id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "skill_id",
+                      "description": "(Required) Skill ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"missing or invalid api key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55fd75cd-6cef-443e-971a-d2c461593ec6",
+              "name": "Skill not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":skill_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version_id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "skill_id",
+                      "description": "(Required) Skill ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"skill not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a603ff6d-6150-4ed3-89e4-34cfe996a33e",
+          "name": "Get version scan results",
+          "request": {
+            "name": "Get version scan results",
+            "description": {
+              "content": "Returns all scan results for a specific skill version. Useful for inspecting historical scan data across scanner versions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "skills",
+                ":skill_id",
+                "versions",
+                ":version_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "skill_id",
+                  "description": "(Required) Skill ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "version_id",
+                  "description": "(Required) Version ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aac5cb95-a4ee-4f90-ac10-5785f08fa927",
+              "name": "Scan results for the specified version.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":skill_id",
+                    "versions",
+                    ":version_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "skill_id",
+                      "description": "(Required) Skill ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "version_id",
+                      "description": "(Required) Version ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"skillId\": 42,\n  \"versionId\": 101,\n  \"scanResults\": [\n    {\n      \"scannerName\": \"nova\",\n      \"scannerVersion\": \"1.2.0\",\n      \"result\": \"pass\",\n      \"details\": {\n        \"rulesMatched\": 0,\n        \"rulesChecked\": 47\n      },\n      \"scannedAt\": \"2026-01-16T02:00:00\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f09d04c-9f9b-4a31-ba63-10509599bcf4",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":skill_id",
+                    "versions",
+                    ":version_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "skill_id",
+                      "description": "(Required) Skill ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "version_id",
+                      "description": "(Required) Version ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"missing or invalid api key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e963c952-b54b-46cf-b62c-edb04d943f5b",
+              "name": "No scan results for this version",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":skill_id",
+                    "versions",
+                    ":version_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "skill_id",
+                      "description": "(Required) Skill ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "version_id",
+                      "description": "(Required) Version ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"no scan results for this version\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://agentmesh.knostic.ai/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a3c0df44-982b-44be-bac1-8d226abdbd00",
+    "name": "Knostic AgentMesh extensions skills API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "AgentMesh is Knostic's reputation and threat-intelligence service for the AI agent supply chain. It continuously discovers, tracks and scans AI agent skills, MCP (Model Context Protocol) servers, and VS Code / IDE extensions for prompt injection and supply-chain threats, and exposes the resulting catalog and scan verdicts over a read API plus an on-demand scan API.\n\nRead endpoints (`/skills`, `/mcp`, `/extensions`) are served to anonymous callers at a reduced tier (responses carry an `X-Tier: anonymous` header); scan endpoints (`/scan/*`, `/scans`) require an API key minted from the AgentMesh console.\n\nContact Support:\n Name: Knostic\n Email: support@knostic.ai",
+      "type": "text/plain"
+    }
+  }
+}

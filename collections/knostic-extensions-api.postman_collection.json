@@ -1,0 +1,477 @@
+{
+  "item": [
+    {
+      "id": "b19fc338-ada5-4854-b19a-bfca112551dd",
+      "name": "extensions",
+      "description": {
+        "content": "VS Code / IDE marketplace extensions with risk assessment",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dfb891c7-16eb-4c11-b0c0-98f2e737c886",
+          "name": "List extensions",
+          "request": {
+            "name": "List extensions",
+            "description": {
+              "content": "Returns a paginated list of VSCode/IDE extensions with risk assessment data. Supports search across name, description, and publisher.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "extensions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Search query — matches name, description, and publisher"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "recent",
+                  "description": "Sort field"
+                },
+                {
+                  "disabled": false,
+                  "key": "dir",
+                  "value": "<string>",
+                  "description": "Sort direction"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by risk status"
+                },
+                {
+                  "disabled": false,
+                  "key": "marketplace",
+                  "value": "<string>",
+                  "description": "Filter by marketplace (e.g. 'vscode', 'open-vsx')"
+                },
+                {
+                  "disabled": false,
+                  "key": "hash",
+                  "value": "<string>",
+                  "description": "Filter by SHA-256 hash (64 hex characters) of the archived extension VSIX bytes. Returns extensions whose fileSha256 matches. Note: extensions don't currently have a multi-version dedup wrapper, so this matches any row whose hash equals the input. Composes with q, status, and marketplace."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Results per page (1–200)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "630ffdee-9c4e-45d3-bf4b-565c7b390211",
+              "name": "Paginated array of extension summaries with risk metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "extensions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "recent"
+                    },
+                    {
+                      "key": "dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "marketplace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hash",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"extensions\": [\n    {\n      \"id\": 7,\n      \"extensionId\": \"ms-python.python\",\n      \"publisher\": \"ms-python\",\n      \"name\": \"python\",\n      \"displayName\": \"Python\",\n      \"version\": \"2026.1.0\",\n      \"installCount\": 98200000,\n      \"rating\": 4.6,\n      \"marketplace\": \"vscode\",\n      \"description\": \"IntelliSense, linting, debugging for Python\",\n      \"lastUpdated\": \"2026-01-20T00:00:00\",\n      \"riskStatus\": \"pass\",\n      \"riskLevel\": \"safe\",\n      \"riskReasons\": null,\n      \"verified\": true,\n      \"downloadUrl\": \"https://marketplace.visualstudio.com/...\",\n      \"latestScanTimestamp\": \"2026-01-21T04:00:00\",\n      \"fileSha256\": \"c3a8f1d6e4b9c2a7f5d8e3b6a1c4f7d2e5b8a3c6f9d2e5b8a1c4f7d3e6b9a2c5\"\n    }\n  ],\n  \"total\": 1,\n  \"page\": 1,\n  \"limit\": 50\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83cd5734-c0fe-423b-b348-018266d855cd",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "extensions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "recent"
+                    },
+                    {
+                      "key": "dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "marketplace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hash",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"missing or invalid api key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7fb417c0-eba8-4146-b808-5d73cd68df06",
+          "name": "Get extension",
+          "request": {
+            "name": "Get extension",
+            "description": {
+              "content": "Returns full details for a single extension including risk level, evidence snippets, scan timestamps, and download URL.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "extensions",
+                ":ext_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "ext_id",
+                  "description": "(Required) Extension ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5b5dd3f3-8cea-4ddf-a856-8cdc2cbef013",
+              "name": "Full extension object with risk analysis details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "extensions",
+                    ":ext_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "ext_id",
+                      "description": "(Required) Extension ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 7,\n  \"extensionId\": \"ms-python.python\",\n  \"extensionHash\": \"abc123def456\",\n  \"publisher\": \"ms-python\",\n  \"name\": \"python\",\n  \"displayName\": \"Python\",\n  \"version\": \"2026.1.0\",\n  \"installCount\": 98200000,\n  \"rating\": 4.6,\n  \"reviewCount\": 450,\n  \"marketplace\": \"vscode\",\n  \"description\": \"IntelliSense, linting, debugging for Python\",\n  \"lastUpdated\": \"2026-01-20T00:00:00\",\n  \"verified\": true,\n  \"downloadUrl\": \"https://marketplace.visualstudio.com/...\",\n  \"riskStatus\": \"pass\",\n  \"riskLevel\": \"safe\",\n  \"riskReasons\": null,\n  \"riskEvidence\": null,\n  \"riskSource\": \"rag\",\n  \"agentScanTimestamp\": \"2026-01-21T04:00:00\",\n  \"ragScanTimestamp\": \"2026-01-21T04:00:00\",\n  \"fileSha256\": \"c3a8f1d6e4b9c2a7f5d8e3b6a1c4f7d2e5b8a3c6f9d2e5b8a1c4f7d3e6b9a2c5\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0304e92c-7c9b-4eaa-8c7e-30d008c40e1d",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "extensions",
+                    ":ext_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "ext_id",
+                      "description": "(Required) Extension ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"missing or invalid api key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36fc05b1-86f4-493b-9618-2155cc74da60",
+              "name": "Extension not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "extensions",
+                    ":ext_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "ext_id",
+                      "description": "(Required) Extension ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"extension not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://agentmesh.knostic.ai/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "798227fb-76f5-4b5e-9854-906cf5a81c3c",
+    "name": "Knostic AgentMesh extensions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "AgentMesh is Knostic's reputation and threat-intelligence service for the AI agent supply chain. It continuously discovers, tracks and scans AI agent skills, MCP (Model Context Protocol) servers, and VS Code / IDE extensions for prompt injection and supply-chain threats, and exposes the resulting catalog and scan verdicts over a read API plus an on-demand scan API.\n\nRead endpoints (`/skills`, `/mcp`, `/extensions`) are served to anonymous callers at a reduced tier (responses carry an `X-Tier: anonymous` header); scan endpoints (`/scan/*`, `/scans`) require an API key minted from the AgentMesh console.\n\nContact Support:\n Name: Knostic\n Email: support@knostic.ai",
+      "type": "text/plain"
+    }
+  }
+}

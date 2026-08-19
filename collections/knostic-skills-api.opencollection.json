@@ -1,0 +1,135 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knostic AgentMesh extensions skills API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "skills",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List skills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://agentmesh.knostic.ai/api/skills",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query — matches against skill name and description (ILIKE)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort field"
+              },
+              {
+                "name": "dir",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction. Defaults to DESC for recent/stars, ASC for name"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by scan status"
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Filter by source URL (ILIKE match)"
+              },
+              {
+                "name": "hash",
+                "value": "",
+                "type": "query",
+                "description": "Filter by SHA-256 hash (64 hex characters) of the archived artifact bytes. Matches across versions: the artifact appears if any of its versions has this hash, even if the latest version was rebuilt with a different hash. The displayed row is the most recent version that matched. Composes with q, status, and source."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-indexed)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Results per page (1–200)"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of AI agent skills with scan status, stars, and metadata. Supports full-text search across name and description fields."
+        },
+        {
+          "info": {
+            "name": "Get skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://agentmesh.knostic.ai/api/skills/:skill_id",
+            "params": [
+              {
+                "name": "skill_id",
+                "value": "",
+                "type": "path",
+                "description": "Skill ID"
+              },
+              {
+                "name": "version_id",
+                "value": "",
+                "type": "query",
+                "description": "Select a specific version for scan results. Defaults to the latest version."
+              }
+            ]
+          },
+          "docs": "Returns full details for a single skill including version history, scan results for the selected version, and repository metadata."
+        },
+        {
+          "info": {
+            "name": "Get version scan results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://agentmesh.knostic.ai/api/skills/:skill_id/versions/:version_id",
+            "params": [
+              {
+                "name": "skill_id",
+                "value": "",
+                "type": "path",
+                "description": "Skill ID"
+              },
+              {
+                "name": "version_id",
+                "value": "",
+                "type": "path",
+                "description": "Version ID"
+              }
+            ]
+          },
+          "docs": "Returns all scan results for a specific skill version. Useful for inspecting historical scan data across scanner versions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

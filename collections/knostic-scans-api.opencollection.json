@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knostic AgentMesh extensions scans API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "scans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Scan skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://agentmesh.knostic.ai/api/scan/skill/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Skill slug — e.g. anthropics:skills or anthropics:skills:algorithmic-art"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Trigger an on-demand security scan for a skill. The slug format is owner:repo for root-level skills or owner:repo:skill_name for nested skills. Returns immediately with a scan ID — poll GET /scans/:scan_id for results. Rate limited to 30 scans/day per API key."
+        },
+        {
+          "info": {
+            "name": "Scan extension",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://agentmesh.knostic.ai/api/scan/extension/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Extension slug — e.g. vscode:ms-python.python"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Trigger an on-demand security scan for a VS Code/IDE extension. The slug format is marketplace:extension_id (e.g. vscode:ms-python.python). Returns immediately — poll GET /scans/:scan_id for results. Rate limited to 30 scans/day per API key."
+        },
+        {
+          "info": {
+            "name": "List scans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://agentmesh.knostic.ai/api/scans",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Results per page (1–100)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns your adhoc scan history, ordered by most recent first. Shows status, result, and timestamps for each scan. Response includes X-Scan-Limit-Remaining header with remaining daily scan credits."
+        },
+        {
+          "info": {
+            "name": "Get scan result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://agentmesh.knostic.ai/api/scans/:scan_id",
+            "params": [
+              {
+                "name": "scan_id",
+                "value": "",
+                "type": "path",
+                "description": "Scan ID returned from POST /scan/*"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Poll for the result of an adhoc scan. When pending, returns queue position and time estimate. When completed, returns the scan result and details. You can only access scans created with your own API key."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

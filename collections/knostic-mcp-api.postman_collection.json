@@ -1,0 +1,735 @@
+{
+  "item": [
+    {
+      "id": "dfc07bbf-01a1-4873-a26a-1b09e180db5c",
+      "name": "mcp",
+      "description": {
+        "content": "Model Context Protocol servers discovered and scanned by AgentMesh",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d6b25abc-25db-45db-85ff-1c674a571cf0",
+          "name": "List MCP servers",
+          "request": {
+            "name": "List MCP servers",
+            "description": {
+              "content": "Returns a paginated list of MCP (Model Context Protocol) servers with scan status, stars, and metadata. Supports full-text search across name and description fields.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mcp"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Search query — matches against MCP server name and description (ILIKE)"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "recent",
+                  "description": "Sort field"
+                },
+                {
+                  "disabled": false,
+                  "key": "dir",
+                  "value": "<string>",
+                  "description": "Sort direction. Defaults to DESC for recent/stars, ASC for name"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by scan status"
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "Filter by source URL (ILIKE match)"
+                },
+                {
+                  "disabled": false,
+                  "key": "hash",
+                  "value": "<string>",
+                  "description": "Filter by SHA-256 hash (64 hex characters) of the archived artifact bytes. Matches across versions: the artifact appears if any of its versions has this hash, even if the latest version was rebuilt with a different hash. The displayed row is the most recent version that matched. Composes with q, status, and source."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (1-indexed)"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Results per page (1–200)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0976cfd8-72ea-4140-9914-4a1fff880b12",
+              "name": "Paginated array of MCP server summaries with scan metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mcp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "recent"
+                    },
+                    {
+                      "key": "dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hash",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"mcpServers\": [\n    {\n      \"id\": 9,\n      \"name\": \"filesystem\",\n      \"gitRepo\": \"https://github.com/modelcontextprotocol/servers\",\n      \"serverPath\": \"src/filesystem\",\n      \"description\": \"Filesystem MCP server — read/write files within an allowed directory\",\n      \"sourceUrl\": \"https://github.com/modelcontextprotocol/servers\",\n      \"stars\": 4200,\n      \"license\": \"MIT\",\n      \"archived\": false,\n      \"latestVersionAt\": \"2026-02-10T08:00:00\",\n      \"scanStatus\": \"pass\",\n      \"latestScanAt\": \"2026-02-11T01:00:00\",\n      \"fileSha256\": \"8f2a7e9d1c5b4f3e6a9d2c8b7e1f4a6d3c9b8e5f2a1d7c4b9e6f3a8d2c5b1e7f\"\n    }\n  ],\n  \"total\": 1,\n  \"page\": 1,\n  \"limit\": 50\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72518dda-932f-424b-b4f5-7448f9cea66c",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mcp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "recent"
+                    },
+                    {
+                      "key": "dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hash",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"missing or invalid api key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "548c6349-eeb5-4ddb-8e34-cc8402a827dc",
+          "name": "Get MCP server",
+          "request": {
+            "name": "Get MCP server",
+            "description": {
+              "content": "Returns full details for a single MCP server including version history, scan results for the selected version, and repository metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mcp",
+                ":server_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version_id",
+                  "value": "<integer>",
+                  "description": "Select a specific version for scan results. Defaults to the latest version."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "server_id",
+                  "description": "(Required) MCP server ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "63676709-92cc-4138-8498-df3bcb534e1f",
+              "name": "Full MCP server object with nested versions and scan results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mcp",
+                    ":server_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version_id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "server_id",
+                      "description": "(Required) MCP server ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 9,\n  \"name\": \"filesystem\",\n  \"gitRepo\": \"https://github.com/modelcontextprotocol/servers\",\n  \"serverPath\": \"src/filesystem\",\n  \"description\": \"Filesystem MCP server\",\n  \"sourceUrl\": \"https://github.com/modelcontextprotocol/servers\",\n  \"scanStatus\": \"pass\",\n  \"stars\": 4200,\n  \"forks\": 380,\n  \"license\": \"MIT\",\n  \"archived\": false,\n  \"repoCreatedAt\": \"2025-04-01T00:00:00\",\n  \"lastPushedAt\": \"2026-02-10T08:00:00\",\n  \"versions\": [\n    {\n      \"id\": 201,\n      \"commitHash\": \"f4e5d6c\",\n      \"commitTimestamp\": \"2026-02-10T08:00:00\",\n      \"scanSummary\": \"pass\",\n      \"fileSha256\": \"8f2a7e9d1c5b4f3e6a9d2c8b7e1f4a6d3c9b8e5f2a1d7c4b9e6f3a8d2c5b1e7f\"\n    }\n  ],\n  \"scanResults\": [\n    {\n      \"scannerName\": \"nova\",\n      \"scannerVersion\": \"1.2.0\",\n      \"result\": \"pass\",\n      \"details\": {\n        \"rulesMatched\": 0,\n        \"rulesChecked\": 47\n      },\n      \"scannedAt\": \"2026-02-11T01:00:00\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "823d7974-ff0f-45d6-908f-a137681ac16f",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mcp",
+                    ":server_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version_id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "server_id",
+                      "description": "(Required) MCP server ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"missing or invalid api key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8002c213-da78-4e2e-89d6-2db197864f6d",
+              "name": "MCP server not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mcp",
+                    ":server_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version_id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "server_id",
+                      "description": "(Required) MCP server ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"mcp server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7ffe12ce-f77e-4234-a354-87a90397e758",
+          "name": "Get MCP version scan results",
+          "request": {
+            "name": "Get MCP version scan results",
+            "description": {
+              "content": "Returns all scan results for a specific MCP server version. Useful for inspecting historical scan data across scanner versions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mcp",
+                ":server_id",
+                "versions",
+                ":version_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "server_id",
+                  "description": "(Required) MCP server ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "version_id",
+                  "description": "(Required) Version ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b96e2ed4-9f91-4a75-b78e-7b76287801d3",
+              "name": "Scan results for the specified version.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mcp",
+                    ":server_id",
+                    "versions",
+                    ":version_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "server_id",
+                      "description": "(Required) MCP server ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "version_id",
+                      "description": "(Required) Version ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"serverId\": 9,\n  \"versionId\": 201,\n  \"scanResults\": [\n    {\n      \"scannerName\": \"nova\",\n      \"scannerVersion\": \"1.2.0\",\n      \"result\": \"pass\",\n      \"details\": {\n        \"rulesMatched\": 0,\n        \"rulesChecked\": 47\n      },\n      \"scannedAt\": \"2026-02-11T01:00:00\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc696949-ac72-4463-8d0d-db812c0b8cd4",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mcp",
+                    ":server_id",
+                    "versions",
+                    ":version_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "server_id",
+                      "description": "(Required) MCP server ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "version_id",
+                      "description": "(Required) Version ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"missing or invalid api key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d30671bb-7b09-432d-8df4-6679d48dd8c9",
+              "name": "No scan results for this version",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mcp",
+                    ":server_id",
+                    "versions",
+                    ":version_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "server_id",
+                      "description": "(Required) MCP server ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "version_id",
+                      "description": "(Required) Version ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"no scan results for this version\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://agentmesh.knostic.ai/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5938a2b8-51c6-47f6-aee0-899560b4c1d3",
+    "name": "Knostic AgentMesh extensions mcp API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "AgentMesh is Knostic's reputation and threat-intelligence service for the AI agent supply chain. It continuously discovers, tracks and scans AI agent skills, MCP (Model Context Protocol) servers, and VS Code / IDE extensions for prompt injection and supply-chain threats, and exposes the resulting catalog and scan verdicts over a read API plus an on-demand scan API.\n\nRead endpoints (`/skills`, `/mcp`, `/extensions`) are served to anonymous callers at a reduced tier (responses carry an `X-Tier: anonymous` header); scan endpoints (`/scan/*`, `/scans`) require an API key minted from the AgentMesh console.\n\nContact Support:\n Name: Knostic\n Email: support@knostic.ai",
+      "type": "text/plain"
+    }
+  }
+}

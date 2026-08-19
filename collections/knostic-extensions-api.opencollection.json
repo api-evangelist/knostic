@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knostic AgentMesh extensions API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "extensions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List extensions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://agentmesh.knostic.ai/api/extensions",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query — matches name, description, and publisher"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort field"
+              },
+              {
+                "name": "dir",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by risk status"
+              },
+              {
+                "name": "marketplace",
+                "value": "",
+                "type": "query",
+                "description": "Filter by marketplace (e.g. 'vscode', 'open-vsx')"
+              },
+              {
+                "name": "hash",
+                "value": "",
+                "type": "query",
+                "description": "Filter by SHA-256 hash (64 hex characters) of the archived extension VSIX bytes. Returns extensions whose fileSha256 matches. Note: extensions don't currently have a multi-version dedup wrapper, so this matches any row whose hash equals the input. Composes with q, status, and marketplace."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Results per page (1–200)"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of VSCode/IDE extensions with risk assessment data. Supports search across name, description, and publisher."
+        },
+        {
+          "info": {
+            "name": "Get extension",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://agentmesh.knostic.ai/api/extensions/:ext_id",
+            "params": [
+              {
+                "name": "ext_id",
+                "value": "",
+                "type": "path",
+                "description": "Extension ID"
+              }
+            ]
+          },
+          "docs": "Returns full details for a single extension including risk level, evidence snippets, scan timestamps, and download URL."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
