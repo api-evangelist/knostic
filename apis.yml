@@ -40,6 +40,17 @@ tags:
 - AI Agents
 - Agent Security
 - Supply Chain Security
+- MCP
+- Threat Intelligence
+- Developer Tools
+- Shadow AI
+tags_raw:
+- Company
+- Security
+- Artificial Intelligence
+- AI Agents
+- Agent Security
+- Supply Chain Security
 - Model Context Protocol
 - Threat Intelligence
 - Developer Tools
@@ -51,6 +62,8 @@ apis:
   humanURL: https://agentmesh.knostic.ai/api
   baseURL: https://agentmesh.knostic.ai/api
   tags:
+  - Extensions
+  tags_raw:
   - extensions
   properties:
   - type: OpenAPI
@@ -79,6 +92,8 @@ apis:
   humanURL: https://agentmesh.knostic.ai/api
   baseURL: https://agentmesh.knostic.ai/api
   tags:
+  - MCP
+  tags_raw:
   - mcp
   properties:
   - type: OpenAPI
@@ -107,6 +122,8 @@ apis:
   humanURL: https://agentmesh.knostic.ai/api
   baseURL: https://agentmesh.knostic.ai/api
   tags:
+  - Scans
+  tags_raw:
   - scans
   properties:
   - type: OpenAPI
@@ -135,6 +152,8 @@ apis:
   humanURL: https://agentmesh.knostic.ai/api
   baseURL: https://agentmesh.knostic.ai/api
   tags:
+  - Skills
+  tags_raw:
   - skills
   properties:
   - type: OpenAPI
