@@ -12,6 +12,18 @@ description: >-
   endpoints answer anonymous callers. Knostic also ships a substantial open-source
   portfolio: AgentSonar (shadow-AI network detection), OpenAnt (LLM-based vulnerability
   discovery), MCP-Scanner, and security and telemetry plugins for OpenClaw agents.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
