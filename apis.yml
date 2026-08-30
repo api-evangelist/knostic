@@ -134,7 +134,7 @@ apis:
   humanURL: https://agentmesh.knostic.ai/api
   baseURL: https://agentmesh.knostic.ai/api
   tags:
-  - Scans
+  - scans
   tags_raw:
   - scans
   properties:
