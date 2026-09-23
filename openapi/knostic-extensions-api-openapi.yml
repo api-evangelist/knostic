@@ -1,11 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Knostic AgentMesh extensions API
+  title: Knostic AgentMesh Extensions API
   version: 1.0.0
-  description: 'AgentMesh is Knostic''s reputation and threat-intelligence service for the AI agent supply chain. It continuously discovers, tracks and scans AI agent skills, MCP (Model Context Protocol) servers, and VS Code / IDE extensions for prompt injection and supply-chain threats, and exposes the resulting catalog and scan verdicts over a read API plus an on-demand scan API.
-
-
-    Read endpoints (`/skills`, `/mcp`, `/extensions`) are served to anonymous callers at a reduced tier (responses carry an `X-Tier: anonymous` header); scan endpoints (`/scan/*`, `/scans`) require an API key minted from the AgentMesh console.'
+  description: AgentMesh is Knostic's reputation and threat-intelligence service for the AI agent supply chain.
   contact:
     name: Knostic
     url: https://www.knostic.ai/
@@ -17,7 +14,7 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: extensions
+- name: Extensions
   description: VS Code / IDE marketplace extensions with risk assessment
 paths:
   /extensions:
@@ -26,7 +23,7 @@ paths:
       summary: List extensions
       description: Returns a paginated list of VSCode/IDE extensions with risk assessment data. Supports search across name, description, and publisher.
       tags:
-      - extensions
+      - Extensions
       responses:
         '200':
           description: Paginated array of extension summaries with risk metadata.
@@ -159,7 +156,7 @@ paths:
       summary: Get extension
       description: Returns full details for a single extension including risk level, evidence snippets, scan timestamps, and download URL.
       tags:
-      - extensions
+      - Extensions
       responses:
         '200':
           description: Full extension object with risk analysis details.
@@ -330,13 +327,6 @@ paths:
           type: integer
 components:
   schemas:
-    Error:
-      type: object
-      description: AgentMesh error envelope.
-      properties:
-        detail:
-          type: string
-          description: Human-readable error message
     ExtensionSummary:
       type: object
       properties:
@@ -395,6 +385,13 @@ components:
         fileSha256:
           type: string
           description: SHA-256 hash (lowercase hex) of the archived extension artifact. null until the upstream pipeline computes it.
+    Error:
+      type: object
+      description: AgentMesh error envelope.
+      properties:
+        detail:
+          type: string
+          description: Human-readable error message
   securitySchemes:
     bearerAuth:
       type: http

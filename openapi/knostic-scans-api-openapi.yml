@@ -1,11 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Knostic AgentMesh extensions scans API
+  title: Knostic AgentMesh Scans API
   version: 1.0.0
-  description: 'AgentMesh is Knostic''s reputation and threat-intelligence service for the AI agent supply chain. It continuously discovers, tracks and scans AI agent skills, MCP (Model Context Protocol) servers, and VS Code / IDE extensions for prompt injection and supply-chain threats, and exposes the resulting catalog and scan verdicts over a read API plus an on-demand scan API.
-
-
-    Read endpoints (`/skills`, `/mcp`, `/extensions`) are served to anonymous callers at a reduced tier (responses carry an `X-Tier: anonymous` header); scan endpoints (`/scan/*`, `/scans`) require an API key minted from the AgentMesh console.'
+  description: AgentMesh is Knostic's reputation and threat-intelligence service for the AI agent supply chain.
   contact:
     name: Knostic
     url: https://www.knostic.ai/
@@ -17,7 +14,7 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: scans
+- name: Scans
   description: On-demand security scans and scan history (API key required)
 paths:
   /scan/skill/{slug}:
@@ -26,7 +23,7 @@ paths:
       summary: Scan skill
       description: Trigger an on-demand security scan for a skill. The slug format is owner:repo for root-level skills or owner:repo:skill_name for nested skills. Returns immediately with a scan ID — poll GET /scans/:scan_id for results. Rate limited to 30 scans/day per API key.
       tags:
-      - scans
+      - Scans
       responses:
         '200':
           description: Scan job accepted with queue position and time estimate.
@@ -111,7 +108,7 @@ paths:
       summary: Scan extension
       description: Trigger an on-demand security scan for a VS Code/IDE extension. The slug format is marketplace:extension_id (e.g. vscode:ms-python.python). Returns immediately — poll GET /scans/:scan_id for results. Rate limited to 30 scans/day per API key.
       tags:
-      - scans
+      - Scans
       responses:
         '200':
           description: Scan job accepted with queue position and time estimate.
@@ -196,7 +193,7 @@ paths:
       summary: List scans
       description: Returns your adhoc scan history, ordered by most recent first. Shows status, result, and timestamps for each scan. Response includes X-Scan-Limit-Remaining header with remaining daily scan credits.
       tags:
-      - scans
+      - Scans
       responses:
         '200':
           description: Paginated array of scan records.
@@ -273,7 +270,7 @@ paths:
       summary: Get scan result
       description: Poll for the result of an adhoc scan. When pending, returns queue position and time estimate. When completed, returns the scan result and details. You can only access scans created with your own API key.
       tags:
-      - scans
+      - Scans
       responses:
         '200':
           description: Scan status with result details when completed.

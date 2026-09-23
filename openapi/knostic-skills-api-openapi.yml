@@ -1,11 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Knostic AgentMesh extensions skills API
+  title: Knostic AgentMesh Skills API
   version: 1.0.0
-  description: 'AgentMesh is Knostic''s reputation and threat-intelligence service for the AI agent supply chain. It continuously discovers, tracks and scans AI agent skills, MCP (Model Context Protocol) servers, and VS Code / IDE extensions for prompt injection and supply-chain threats, and exposes the resulting catalog and scan verdicts over a read API plus an on-demand scan API.
-
-
-    Read endpoints (`/skills`, `/mcp`, `/extensions`) are served to anonymous callers at a reduced tier (responses carry an `X-Tier: anonymous` header); scan endpoints (`/scan/*`, `/scans`) require an API key minted from the AgentMesh console.'
+  description: AgentMesh is Knostic's reputation and threat-intelligence service for the AI agent supply chain.
   contact:
     name: Knostic
     url: https://www.knostic.ai/
@@ -17,7 +14,7 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: skills
+- name: Skills
   description: AI agent skills (SKILL.md) discovered and scanned by AgentMesh
 paths:
   /skills:
@@ -26,7 +23,7 @@ paths:
       summary: List skills
       description: Returns a paginated list of AI agent skills with scan status, stars, and metadata. Supports full-text search across name and description fields.
       tags:
-      - skills
+      - Skills
       responses:
         '200':
           description: Paginated array of skill summaries with scan metadata.
@@ -153,7 +150,7 @@ paths:
       summary: Get skill
       description: Returns full details for a single skill including version history, scan results for the selected version, and repository metadata.
       tags:
-      - skills
+      - Skills
       responses:
         '200':
           description: Full skill object with nested versions and scan results.
@@ -343,7 +340,7 @@ paths:
       summary: Get version scan results
       description: Returns all scan results for a specific skill version. Useful for inspecting historical scan data across scanner versions.
       tags:
-      - skills
+      - Skills
       responses:
         '200':
           description: Scan results for the specified version.

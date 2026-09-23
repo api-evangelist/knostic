@@ -1,10 +1,7 @@
 {
   "provider": "knostic",
   "sources": [
-    "knostic-extensions-api-openapi.yml",
-    "knostic-mcp-api-openapi.yml",
-    "knostic-scans-api-openapi.yml",
-    "knostic-skills-api-openapi.yml"
+    "_original/knostic-agentmesh-openapi.yml"
   ],
   "outputs": [
     "knostic-extensions-api-openapi.yml",
@@ -14,9 +11,18 @@
   ],
   "archived": [],
   "errors": [
-    "knostic-scans-api-openapi.yml: dangling $ref: #/components/schemas/Scan"
+    "knostic-agentmesh-openapi.yml: dangling $ref: #/components/schemas/Scan"
   ],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "knostic-agentmesh-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "knostic-extensions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knostic-mcp-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knostic-scans-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knostic-skills-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
