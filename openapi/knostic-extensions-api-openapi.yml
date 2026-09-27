@@ -327,6 +327,13 @@ paths:
           type: integer
 components:
   schemas:
+    Error:
+      type: object
+      description: AgentMesh error envelope.
+      properties:
+        detail:
+          type: string
+          description: Human-readable error message
     ExtensionSummary:
       type: object
       properties:
@@ -385,13 +392,6 @@ components:
         fileSha256:
           type: string
           description: SHA-256 hash (lowercase hex) of the archived extension artifact. null until the upstream pipeline computes it.
-    Error:
-      type: object
-      description: AgentMesh error envelope.
-      properties:
-        detail:
-          type: string
-          description: Human-readable error message
   securitySchemes:
     bearerAuth:
       type: http

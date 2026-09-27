@@ -72,7 +72,7 @@ tags_raw:
 - Shadow AI
 apis:
 - aid: knostic:knostic-extensions-api
-  name: Knostic extensions API
+  name: Knostic Extensions API
   description: VS Code / IDE marketplace extensions with risk assessment
   humanURL: https://agentmesh.knostic.ai/api
   baseURL: https://agentmesh.knostic.ai/api
@@ -102,7 +102,7 @@ apis:
   - type: Sandbox
     url: sandbox/knostic-sandbox.yml
 - aid: knostic:knostic-mcp-api
-  name: Knostic mcp API
+  name: Knostic MCP API
   description: Model Context Protocol servers discovered and scanned by AgentMesh
   humanURL: https://agentmesh.knostic.ai/api
   baseURL: https://agentmesh.knostic.ai/api
@@ -132,7 +132,7 @@ apis:
   - type: Sandbox
     url: sandbox/knostic-sandbox.yml
 - aid: knostic:knostic-scans-api
-  name: Knostic scans API
+  name: Knostic Scans API
   description: On-demand security scans and scan history (API key required)
   humanURL: https://agentmesh.knostic.ai/api
   baseURL: https://agentmesh.knostic.ai/api
@@ -162,7 +162,7 @@ apis:
   - type: Sandbox
     url: sandbox/knostic-sandbox.yml
 - aid: knostic:knostic-skills-api
-  name: Knostic skills API
+  name: Knostic Skills API
   description: AI agent skills (SKILL.md) discovered and scanned by AgentMesh
   humanURL: https://agentmesh.knostic.ai/api
   baseURL: https://agentmesh.knostic.ai/api
