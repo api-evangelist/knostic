@@ -1,0 +1,74 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://www.knostic.ai/pricing
+sources:
+- https://www.knostic.ai/pricing
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T112025
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: per-seat
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-07'
+  managed_tier: Team
+published: true
+note: Two product pricing tables (Kirin and AgentMesh); per-user monthly pricing with free tiers and a
+  negotiated Enterprise tier. 'Need 11 or more users? Contact sales for enterprise pricing.'
+plan_count: 6
+currency: USD
+plans:
+- name: Kirin Free
+  price_text: $0
+  price: 0
+  currency: USD
+  period: month
+  unit: per account
+  included_quota: For individual developers / small teams (1 - 5 users); continuous scanning, granular
+    policies control, configuration enforcement, extensions scanning, rules and generated code scanning,
+    MCP scanning, standard support
+- name: Kirin Team
+  price_text: $15
+  price: 15
+  currency: USD
+  period: month
+  unit: per user
+  included_quota: For growing teams (5+ users); everything in Free plus unified dashboard, organizational
+    policy, RBAC, audit logs, cross-org visibility, priority support; 14-day free trial
+  overage: 'Advanced contextual detection: add-on'
+- name: Kirin Enterprise
+  price_text: Contact Us
+  period: none
+  included_quota: For engineering managers (10+ users); everything in Team plus policy groups, advanced
+    contextual detections, Enterprise SSO, SIEM/Slack integrations, compliance reporting, dedicated support;
+    14-day free trial
+- name: AgentMesh Free
+  price_text: $0
+  price: 0
+  currency: USD
+  period: month
+  unit: per account
+  included_quota: No time limit · login required; 300 items per category (fixed set); Web UI + limited
+    API access
+- name: AgentMesh Premium
+  price_text: $15
+  price: 15
+  currency: USD
+  period: month
+  unit: per user
+  included_quota: Full catalog - all categories; up to 300 API calls per month (20/day); Kirin IDE security
+    included
+- name: AgentMesh Pro
+  price_text: $850
+  price: 850
+  currency: USD
+  period: month
+  unit: per user
+  included_quota: Full catalog - all categories; unlimited API access; Kirin IDE security included
+rate_limit_statements:
+- Up to 300 API calls per month (20/day)
+- Unlimited API access
+- 300 items per category (fixed set)
