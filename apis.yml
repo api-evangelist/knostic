@@ -197,6 +197,10 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Pricing
+  url: https://www.knostic.ai/pricing
+- type: Plans
+  url: plans/knostic-plans-pricing.yml
 - url: https://www.knostic.ai/blog/rss.xml
   type: BlogRSS
 - type: CapabilityMap
