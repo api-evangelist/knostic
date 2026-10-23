@@ -5,7 +5,7 @@
       "source": "https://www.knostic.ai/blog/rss.xml",
       "feed_url": "https://www.knostic.ai/blog/rss.xml",
       "title": "",
-      "saved": 1,
+      "saved": 0,
       "method": "feed"
     },
     {
@@ -14,15 +14,8 @@
       "title": "",
       "saved": 0,
       "method": "discovered"
-    },
-    {
-      "source": "https://www.knostic.ai/contact",
-      "feed_url": "https://www.knostic.ai/blog/rss.xml",
-      "title": "",
-      "saved": 0,
-      "method": "discovered"
     }
   ],
-  "post_count": 1,
-  "fetched": "2026-10-10T13:15:00Z"
+  "post_count": 20,
+  "fetched": "2026-10-17T14:53:57Z"
 }
