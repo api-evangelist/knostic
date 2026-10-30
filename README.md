@@ -64,6 +64,147 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Knostic is a company surfaced as a portfolio company of seedcamp and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Knostic secures the AI agent supply chain inside the enterprise. Its platform discovers shadow AI, coding assistants, MCP servers and IDE extensions in use across an organization, then scans them for prompt injection, data exfiltration, secret and PII leakage, and destructive commands. Knostic runs AgentMesh, a public reputation and threat-intelligence service that continuously discovers, tracks and scans AI agent skills, Model Context Protocol servers, and VS Code / IDE marketplace extensions — roughly 80,500 skills, 4,800 MCP servers and 59,900 extensions as of July 2026 — and exposes that catalog with per-version scan verdicts through a REST API whose read endpoints answer anonymous callers. Knostic also ships a substantial open-source portfolio: AgentSonar (shadow-AI network detection), OpenAnt (LLM-based vulnerability discovery), MCP-Scanner, and security and telemetry plugins for OpenClaw agents.
 
-Backed by: seedcamp — http://knostic.ai
+**Areas:** Company · Security · Artificial Intelligence · AI Agents · Agent Security · Supply Chain Security · MCP · Threat Intelligence · Developer Tools · Shadow AI
+
+## Knostic on APIs.io
+
+Everything profiled for Knostic is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/knostic/](https://apis.io/providers/knostic/)** — or go straight to one of the APIs or properties below.
+
+### APIs (4)
+
+- [Knostic Extensions API](https://apis.io/apis/knostic/knostic-extensions-api/) — VS Code / IDE marketplace extensions with risk assessment
+- [Knostic MCP API](https://apis.io/apis/knostic/knostic-mcp-api/) — Model Context Protocol servers discovered and scanned by AgentMesh
+- [Knostic Scans API](https://apis.io/apis/knostic/knostic-scans-api/) — On-demand security scans and scan history (API key required)
+- [Knostic Skills API](https://apis.io/apis/knostic/knostic-skills-api/) — AI agent skills (SKILL.md) discovered and scanned by AgentMesh
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [knostic-agentmesh](https://apis.io/servers/knostic/knostic-agentmesh/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Knostic Agentic Access](https://apis.io/agentic-access/knostic/knostic-agentic-access/)
+
+#### Examples (3)
+
+Example requests and responses.
+
+- [Knostic List Extensions Response](https://apis.io/examples/knostic/knostic-list-extensions-response/)
+- [Knostic List Mcp Response](https://apis.io/examples/knostic/knostic-list-mcp-response/)
+- [Knostic List Skills Response](https://apis.io/examples/knostic/knostic-list-skills-response/)
+
+#### Collections (4)
+
+Postman and Open Collection request collections.
+
+- [Knostic AgentMesh extensions API](https://apis.io/collections/knostic/open-knostic-extensions-api/)
+- [Knostic AgentMesh extensions mcp API](https://apis.io/collections/knostic/open-knostic-mcp-api/)
+- [Knostic AgentMesh extensions scans API](https://apis.io/collections/knostic/open-knostic-scans-api/)
+- [Knostic AgentMesh extensions skills API](https://apis.io/collections/knostic/open-knostic-skills-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Knostic Agentmesh Overlay](https://apis.io/overlays/knostic/knostic-agentmesh-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Knostic Authentication](https://apis.io/security/knostic/knostic-authentication/)
+- [Knostic Domain Security](https://apis.io/security/knostic/knostic-domain-security/)
+- [Knostic Trust Center](https://apis.io/security/knostic/knostic-trust-center/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Knostic Plans Pricing](https://apis.io/plans/knostic/knostic-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Knostic Rate Limits](https://apis.io/rate-limits/knostic/knostic-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.knostic.ai/)
+- [Documentation](https://agentmesh.knostic.ai/api)
+- [API reference](https://agentmesh.knostic.ai/api)
+- [Pricing](https://www.knostic.ai/pricing)
+- [Support](https://www.knostic.ai/contact)
+- [Blog](https://www.knostic.ai/blog)
+- [Security](https://www.knostic.ai/security)
+- [Compliance](https://security.knostic.ai/)
+- [Terms of service](https://www.knostic.ai/terms-of-service)
+- [Privacy policy](https://www.knostic.ai/privacy-policy)
+- [GitHub](https://github.com/knostic)
+
+## API Evangelist rating
+
+**Kin Score 56.2** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 56.6 |
+| Contract governance | 4.5 |
+| Operational transparency | 60.5 |
+| Developer ergonomics | 40.5 |
+| Access clarity | 85.5 |
+
+**Agent readiness 35.6** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 27.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/knostic/](https://apis.io/providers/knostic/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Knostic: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/knostic/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
